@@ -1,0 +1,224 @@
+:root{
+    --bg-color: #f4f4f9;
+    --border-color: #ccc;
+}
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    padding-top: 1%;
+
+    display: flex;             
+    flex-direction: column;    
+    justify-content: center;   
+    align-items: center;
+}
+
+.container {
+    background-color: white;
+    padding-top: 3%;
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 1px solid #999;
+    position: relative;
+    z-index: 1;
+    width: 48%;
+    padding: 2.5%;
+}
+
+.destaque {
+    background-color: #fcfcfc;
+    border: 1px dotted rgb(56, 57, 69);
+    padding: 3%;
+    border-radius: 5px;
+    padding-top: 4%;
+    position: relative;
+    width: 92%;
+}
+
+.nome_destaque {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: white;
+    font-weight: bold;
+    color: black;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.campoUnico {
+    display: flex;
+    flex-direction: column;
+}
+
+.col{
+    display: flex;
+    flex: column;
+    gap:10px;
+}
+
+.row{
+    display: flex;
+    flex: row;
+    gap:10px;
+    display: flex; /* Coloca um ao lado do outro */
+    gap: 1%;
+}
+
+.espaco{
+    padding: 2.3%;
+}
+
+.inicio{
+    font-weight: bold !important;
+    font-size: 1rem;
+}
+        
+textarea {
+    width: 100%;           
+    height: 4rem;       
+    resize: none; /* Opcional: impede o usuário de deformar o quadrado */
+    padding: 10px; /* Dá um respiro para o texto não encostar na borda */
+    box-sizing: border-box; /* Garante que o padding não aumente o tamanho do campo */
+    /* Garante a quebra de linha */
+    white-space: pre-wrap;  
+    overflow-wrap: break-word; 
+    overflow-y: auto; /* Adiciona barra de rolagem se o texto for maior que o quadrado */
+    border: 0px;
+    outline: none; /*remove contorno preto quando clica*/
+    background-color: #fcfcfc;
+}
+
+h3{
+    font-size: 1rem;
+    margin: 0%;
+}
+
+h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-top: 0px;
+}
+
+label {
+    display: block;
+    font-weight: lighter;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+#nro,#data{
+    background: #ffffff;
+}
+
+input, select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    box-sizing: border-box;
+    background: #dfe4ea;
+}
+
+.tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 0;
+    width: 53.1%; 
+    justify-content: flex-start;
+}
+
+.tab-btn {
+    padding: 5px 15px;
+    background-color: #e0e0e0;
+    border: 1px solid #999;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: #555;
+    transition: all 0.2s;
+}
+
+.tab-btn.ativo {
+    background-color: white;
+    color: #535fbe;
+    border-top: 3px solid #535fbe;
+    border-bottom: 1px solid white; /* Cobre a borda do container */
+    position: relative;
+    top: 1px;
+    z-index: 2;
+}
+
+.tab-btn:hover:not(.ativo) {
+    background-color: #d0d0d0;
+}
+
+/* Animação de troca das tabs */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.4s;
+}
+
+.tab-content.ativo {
+    display: block;
+}
+        
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+        
+    
+table {
+    margin-top: 1%;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+th {
+    background-color: #fcfcfc;
+    font-size: 0.85rem;
+    border-top: 1px solid #ccc;
+}
+
+.btn-add-row {
+    background-color:  #485cf4;
+    color: white;
+    border: none;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-top: 0.3%;
+}
+
+.rodape {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #000;
+}
+
+button.btn-submit {
+    background-color: #464e8f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}

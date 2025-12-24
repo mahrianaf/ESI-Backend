@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Servicos.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" 
+          rel="stylesheet">
+    <title>Trabalho ESI</title>
+</head>
+<body>
+    <div class="tabs">
+        <button class="tab-btn ativo" onclick="openTab('OrdemServico', this)">Ordem de Serviço</button>
+        <button class="tab-btn" onclick="openTab('ReceitaMedica', this)">Receita Médica</button>
+    </div>
+    <div class="container">
+        <!--Ordem de Serviço-->
+        <div id="OrdemServico" class="tab-content ativo">
+            <h2>Formulário Ordem de Serviço</h2>
+            <div class="row">
+                <div class="campoUnico">
+                    <label class="inicio" for="nro">Número OS</label>
+                    <input id="nro" placeholder="Ex: 001">
+                </div>
+                <div class="campoUnico">
+                    <label class="inicio"  for="data">Data Emissão</label>
+                    <input type="date" id="data">
+                </div>
+            </div>
+            <div class="espaco"></div>
+            <!--Dados Cliente-->
+            <div class="destaque">
+                <span class="nome_destaque">Dados do Cliente</span>
+                <div class="row"> <!--Dados Cliente-->
+                    <div class="campoUnico" style="flex: 0.5;"> 
+                        <label>Código:</label>
+                        <input id="nro" placeholder="Ex: 001">
+                    </div>
+                    <div class="campoUnico" style="flex: 2;">
+                        <label>Nome:</label>
+                        <input disabled">
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>CPF:</label>
+                        <input disabled>
+                    </div>
+                </div>
+                <div class="row"> <!--Dados Moradia-->
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>Bairro:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>Rua:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 0.8;">
+                        <label>Complemento:</label>
+                        <input disabled>
+                    </div>
+                </div>
+                <div class="row"> <!--Dados Cidade-->
+                    <div class="campoUnico" style="flex: 0.3;">
+                        <label>Nro:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>CEP:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>Cidade:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 0.3;">
+                        <label>UF:</label>
+                        <input disabled>
+                    </div>
+                </div>
+                <div class="row"> <!--Dados Contato-->
+                    <div class="campoUnico" style="flex: 1;"> 
+                        <label>Email:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1">
+                        <label>Telefone:</label>
+                        <input disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="espaco"></div>
+            <!--Dados Atendente-->
+            <div class="destaque">
+                <span class="nome_destaque">Dados do Atendente</span>
+                <div class="row"> <!--Dados Atendente-->
+                    <div class="campoUnico" style="flex: 0.17;"> 
+                        <label>Código:</label>
+                        <input id="nro" placeholder="Ex: 001">
+                    </div>
+                    <div class="campoUnico" style="flex: 1">
+                        <label>Nome:</label>
+                        <input disabled>
+                    </div>
+                </div>
+                <div class="row"> <!--Dados Contato-->
+                    <div class="campoUnico" style="flex: 1;"> 
+                        <label>Email:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>Telefone:</label>
+                        <input disabled>
+                    </div>
+                </div>
+            </div> 
+            <div class="espaco"></div>
+            <!--Descrição do Problema-->
+            <form class="destaque"> 
+                <span class="nome_destaque">Descrição do Problema</span>
+                <textarea id="DP" placeholder=""></textarea>
+            </form>
+            <div class="espaco"></div>
+            <!--Serviços Realizados-->
+            <div>
+                <div class="row">
+                    <h3>Serviços Realizados</h3>
+                    <button type="button" class="btn-add-row" onclick="adicionarLinha()">+ Adicionar</button>
+                </div> 
+                <table id="tabelaServico">
+                    <thead>
+                        <tr>
+                            <th style="width: 80rem;">Código do Serviço</th>
+                            <th style="width: 80rem;">Tipo do Serviço</th>
+                            <th style="width: 80rem;">Valor do Serviço</th>
+                        </tr>
+                    </thead>
+               </table>
+            </div>
+            <!--Botão Registrar OS-->
+            <div class="rodape"> 
+                <button type="submit" class="btn-submit">Registrar Ordem de Serviço</button>
+            </div>
+        </div>
+
+        <!--Receita Médica-->
+        <div id="ReceitaMedica" class="tab-content">
+            <h2>Formulário Receita Médica</h2>
+
+        </div>
+    </div>
+    <script src="Servicos.js"></script>
+</body>
+</html>
