@@ -32,6 +32,23 @@ function adicionarLinha() {
     tbody.appendChild(row);
 }
 
+//Adição de Linhas da Tabela de Medicamentos
+function addMedicamento() {
+    const tbody = document.querySelector("#tabelaReceita");
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+        <td><input type="text" placeholder="" style="background-color: #fcfcfc;"></td>
+        <td><input type="date" style="background-color: #fcfcfc;"></td>
+        <td><input type="date" style="background-color: #fcfcfc;"></td>
+        <td><input type="text" placeholder="" style="background-color: #fcfcfc;"></td>
+        <td>
+            <i class="ri-close-circle-fill" onclick="removerLinha(this)"></i>
+        </td>
+    `;
+    tbody.appendChild(row);
+}
+
 //Remoção da Linha Adicionada
 function removerLinha(btn) {
     const row = btn.parentNode.parentNode;

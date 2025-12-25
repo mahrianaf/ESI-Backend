@@ -26,11 +26,16 @@
                     <label class="inicio"  for="data">Data Emissão</label>
                     <input type="date" id="data">
                 </div>
+                <div class="campoBusca">
+                    <input placeholder="Busque aqui">
+                    <button><i class="ri-search-line"></i></button>
+                </div>
             </div>
             <div class="espaco"></div>
             <!--Dados Cliente-->
             <div class="destaque">
                 <span class="nome_destaque">Dados do Cliente</span>
+                <button type="button" id="user-add" class="btn-add-row"><i class="ri-user-add-line">Cadastrar</i></button>
                 <div class="row"> <!--Dados Cliente-->
                     <div class="campoUnico" style="flex: 0.5;"> 
                         <label>Código:</label>
@@ -145,7 +150,176 @@
         <!--Receita Médica-->
         <div id="ReceitaMedica" class="tab-content">
             <h2>Formulário Receita Médica</h2>
-
+            <div class="row">
+                <div class="campoUnico">
+                    <label class="inicio" for="nro">Número Receita</label>
+                    <input id="nro" placeholder="Ex: 001">
+                </div>
+                <div class="campoUnico">
+                    <label class="inicio"  for="data">Data Emissão</label>
+                    <input type="date" id="data">
+                </div>
+                <div class="campoBusca">
+                    <input placeholder="Busque aqui">
+                    <button><i class="ri-search-line"></i></button>
+                </div>
+            </div>
+            <div class="espaco"></div>
+            <!--Dados Medico-->
+            <div class="destaque">
+                <span class="nome_destaque">Dados do Médico</span>
+                <div class="row"> <!--Dados Medico-->
+                    <div class="campoUnico" style="flex: 0.5;"> 
+                        <label>CRM:</label>
+                        <input id="nro" placeholder="Ex: 001">
+                    </div>
+                    <div class="campoUnico" style="flex: 2;">
+                        <label>Nome:</label>
+                        <input disabled">
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>CPF:</label>
+                        <input disabled>
+                    </div>
+                </div>
+                <div class="row"> <!--Dados Moradia-->
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>Bairro:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>Rua:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 0.8;">
+                        <label>Complemento:</label>
+                        <input disabled>
+                    </div>
+                </div>
+                <div class="row"> <!--Dados Cidade-->
+                    <div class="campoUnico" style="flex: 0.3;">
+                        <label>Nro:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>CEP:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>Cidade:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 0.3;">
+                        <label>UF:</label>
+                        <input disabled>
+                    </div>
+                </div>
+                <div class="row"> <!--Dados Contato-->
+                    <div class="campoUnico" style="flex: 1;"> 
+                        <label>Email:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1">
+                        <label>Telefone:</label>
+                        <input disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="espaco"></div>
+            <!--Dados Paciente-->
+            <div class="destaque">
+                <span class="nome_destaque">Dados do Paciente</span>
+                <button type="button" id="user-add" class="btn-add-row"><i class="ri-user-add-line">Cadastrar</i></button>
+                <div class="row"> <!--Dados Paciente-->
+                    <div class="campoUnico" style="flex: 0.17;"> 
+                        <label>CPF:</label>
+                        <input id="nro" placeholder="Ex: 001">
+                    </div>
+                    <div class="campoUnico" style="flex: 1">
+                        <label>Nome:</label>
+                        <input disabled>
+                    </div>
+                </div>
+                <div class="row"> <!--Dados Moradia-->
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>Bairro:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>Rua:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 0.8;">
+                        <label>Complemento:</label>
+                        <input disabled>
+                    </div>
+                </div>
+                <div class="row"> <!--Dados Cidade-->
+                    <div class="campoUnico" style="flex: 0.3;">
+                        <label>Nro:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>CEP:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1;">
+                        <label>Cidade:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 0.3;">
+                        <label>UF:</label>
+                        <input disabled>
+                    </div>
+                </div>
+                <div class="row"> <!--Dados Contato-->
+                    <div class="campoUnico" style="flex: 1;"> 
+                        <label>Email:</label>
+                        <input disabled>
+                    </div>
+                    <div class="campoUnico" style="flex: 1">
+                        <label>Telefone:</label>
+                        <input disabled>
+                    </div>
+                </div>
+            </div> 
+            <div class="espaco"></div>
+            <!--Tratamento Indicado-->
+            <div class="destaque"> 
+                <span class="nome_destaque">Tratamento Indicado</span>
+                <div class="row"> 
+                    <div class="campoUnico" style="flex: 0.17;"> 
+                        <label>Código CID:</label>
+                        <input id="nro" placeholder="Ex: 001">
+                    </div>
+                    <div class="campoUnico" style="flex: 1">
+                        <label>Nome CID:</label>
+                        <input disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="espaco"></div>
+            <!--Medicamentos Prescritos-->
+            <div>
+                <div class="row">
+                    <h3>Medicamentos Prescritos</h3>
+                    <button type="button" class="btn-add-row" onclick="addMedicamento()">+ Adicionar</button>
+                </div> 
+                <table id="tabelaReceita">
+                    <thead>
+                        <tr>
+                            <th style="width: 80rem;">Medicamento</th>
+                            <th style="width: 80rem;">Início de Uso</th>
+                            <th style="width: 80rem;">Fim de Uso</th>
+                            <th style="width: 80rem;">Posologia</th>
+                        </tr>
+                    </thead>
+               </table>
+            </div>
+            <!--Botão Registrar OS-->
+            <div class="rodape"> 
+                <button type="submit" class="btn-submit">Registrar Receita Médica</button>
+            </div>
         </div>
     </div>
     <script src="Servicos.js"></script>

@@ -14,6 +14,54 @@ body{
     align-items: center;
 }
 
+.row .campoBusca{
+    padding-left: 28%;
+}
+
+.campoBusca{
+    display: flex;
+    flex-direction: row;
+    align-items: end; /*campoBusca eh um div que junta duas linhas, 
+                       ent end faz com que fique na segunda linha*/
+    justify-content: right; /*isso posiciona o botao na direita*/
+}
+
+.campoBusca input{
+    background-color: #fcfcfc;
+    color: Black;
+    position: relative;
+    border-radius: 50px;
+    width: 100%;
+    outline: none;
+    padding-left: 2rem; /*"paragrafo"*/
+}
+
+.campoBusca button{
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50px;
+    background-color: black;/*#485cf4;*/
+    border: 0px;
+    color: white;
+    position: absolute; /*usar isso para sobrepor o botao*/
+    cursor: pointer;
+}
+
+.campoBusca button:hover{
+    background-color:#6a71af;
+    color: white;
+}
+
+#user-add{ /*nao esquecer que id's usam #!*/
+    position: absolute;
+    margin-top: 13.7rem; /*aqui eh rem nao porcentagem*/
+    right: 1.2rem;
+    background-color: black !important;
+    font-weight: lighter;
+    color: white;
+    font-size: 0.9rem;
+}
+
 .container {
     background-color: white;
     padding-top: 3%;
