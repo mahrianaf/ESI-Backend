@@ -26,7 +26,7 @@
                     <label class="inicio"  for="data">Data Emissão</label>
                     <input type="date" id="data">
                 </div>
-                <div class="campoBusca">
+                <div class="campoBusca OS">
                     <input placeholder="Busque aqui">
                     <button><i class="ri-search-line"></i></button>
                 </div>
@@ -35,7 +35,7 @@
             <!--Dados Cliente-->
             <div class="destaque">
                 <span class="nome_destaque">Dados do Cliente</span>
-                <button type="button" id="user-add" class="btn-add-row"><i class="ri-user-add-line">Cadastrar</i></button>
+                <button type="button" id="user-add" class="btn-add-row"><i class="ri-user-add-line" onclick="location.href='endereco.html?tipo=cliente';">Cadastrar/ Consultar</i></button>
                 <div class="row"> <!--Dados Cliente-->
                     <div class="campoUnico" style="flex: 0.5;"> 
                         <label>Código:</label>
@@ -140,6 +140,11 @@
                         </tr>
                     </thead>
                </table>
+               <div class="espaco"></div>
+               <div class="row" style="width: 27%; gap: 15px; align-items: end;"> 
+                    <label>TOTAL</label>
+                    <input id="total" placeholder="R$ 0.00" style="padding-left: 5rem;">
+                </div>
             </div>
             <!--Botão Registrar OS-->
             <div class="rodape"> 
@@ -168,7 +173,7 @@
             <!--Dados Medico-->
             <div class="destaque">
                 <span class="nome_destaque">Dados do Médico</span>
-                <div class="row"> <!--Dados Medico-->
+                <div class="row receita"> <!--Dados Medico-->
                     <div class="campoUnico" style="flex: 0.5;"> 
                         <label>CRM:</label>
                         <input id="nro" placeholder="Ex: 001">
@@ -182,7 +187,7 @@
                         <input disabled>
                     </div>
                 </div>
-                <div class="row"> <!--Dados Moradia-->
+                <div class="row receita"> <!--Dados Moradia-->
                     <div class="campoUnico" style="flex: 1;">
                         <label>Bairro:</label>
                         <input disabled>
@@ -196,7 +201,7 @@
                         <input disabled>
                     </div>
                 </div>
-                <div class="row"> <!--Dados Cidade-->
+                <div class="row receita"> <!--Dados Cidade-->
                     <div class="campoUnico" style="flex: 0.3;">
                         <label>Nro:</label>
                         <input disabled>
@@ -214,7 +219,7 @@
                         <input disabled>
                     </div>
                 </div>
-                <div class="row"> <!--Dados Contato-->
+                <div class="row receita"> <!--Dados Contato-->
                     <div class="campoUnico" style="flex: 1;"> 
                         <label>Email:</label>
                         <input disabled>
@@ -229,8 +234,8 @@
             <!--Dados Paciente-->
             <div class="destaque">
                 <span class="nome_destaque">Dados do Paciente</span>
-                <button type="button" id="user-add" class="btn-add-row"><i class="ri-user-add-line">Cadastrar</i></button>
-                <div class="row"> <!--Dados Paciente-->
+                <button type="button" id="user-add-receita" class="btn-add-row" onclick="location.href='endereco.html?tipo=paciente';"><i class="ri-user-add-line">Cadastrar/ Consultar</i></button>
+                <div class="row receita"> <!--Dados Paciente-->
                     <div class="campoUnico" style="flex: 0.17;"> 
                         <label>CPF:</label>
                         <input id="nro" placeholder="Ex: 001">
@@ -240,7 +245,7 @@
                         <input disabled>
                     </div>
                 </div>
-                <div class="row"> <!--Dados Moradia-->
+                <div class="row receita"> <!--Dados Moradia-->
                     <div class="campoUnico" style="flex: 1;">
                         <label>Bairro:</label>
                         <input disabled>
@@ -254,7 +259,7 @@
                         <input disabled>
                     </div>
                 </div>
-                <div class="row"> <!--Dados Cidade-->
+                <div class="row receita"> <!--Dados Cidade-->
                     <div class="campoUnico" style="flex: 0.3;">
                         <label>Nro:</label>
                         <input disabled>
@@ -272,7 +277,7 @@
                         <input disabled>
                     </div>
                 </div>
-                <div class="row"> <!--Dados Contato-->
+                <div class="row receita"> <!--Dados Contato-->
                     <div class="campoUnico" style="flex: 1;"> 
                         <label>Email:</label>
                         <input disabled>
@@ -287,7 +292,7 @@
             <!--Tratamento Indicado-->
             <div class="destaque"> 
                 <span class="nome_destaque">Tratamento Indicado</span>
-                <div class="row"> 
+                <div class="row receita"> 
                     <div class="campoUnico" style="flex: 0.17;"> 
                         <label>Código CID:</label>
                         <input id="nro" placeholder="Ex: 001">
@@ -303,7 +308,7 @@
             <div>
                 <div class="row">
                     <h3>Medicamentos Prescritos</h3>
-                    <button type="button" class="btn-add-row" onclick="addMedicamento()">+ Adicionar</button>
+                    <button type="button" class="btn-add-row receita" onclick="addMedicamento()">+ Adicionar</button>
                 </div> 
                 <table id="tabelaReceita">
                     <thead>
@@ -316,9 +321,9 @@
                     </thead>
                </table>
             </div>
-            <!--Botão Registrar OS-->
+            <!--Botão Registrar Receita-->
             <div class="rodape"> 
-                <button type="submit" class="btn-submit">Registrar Receita Médica</button>
+                <button type="submit" class="btn-submit receita">Registrar Receita Médica</button>
             </div>
         </div>
     </div>

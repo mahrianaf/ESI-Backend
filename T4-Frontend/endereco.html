@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Endereços</title>
+    <link rel="stylesheet" href="endereco.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" 
+          rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <!--Mensagem-->
+    <div id="status-message" class="message success" style="display: none;"></div>
+
+    <div class="card consulta">
+        <h2>Sistema de Consultas</h2>
+
+        <div class="search-group">
+            <input type="text" id="inputCepBusca" placeholder="Buscar endereço por CEP">
+            <button onclick="consultarEndereco('cep')">Buscar</button>
+        </div>
+        <div class="search-group">
+            <input type="text" id="inputIdBusca" placeholder="Buscar endereço por ID">
+            <button onclick="consultarEndereco('id')">Buscar</button>
+        </div>
+        <div class="search-group"> 
+            <input type="text" id="inputCepViaCep" placeholder="Buscar endereço ViaCEP">
+            <button onclick="consultarEndereco('viacep')">ViaCep</button>
+        </div>
+        <div class="search-group"> 
+            <input type="text" id="inputCpfBusca" placeholder="Buscar cliente/paciente por CPF">
+            <button onclick="consultarPessoa()">CPF</button>
+        </div>
+    </div>
+
+    <!--Resultado das Consultas-->
+    <div id="resultadoBusca" style="display: none;"></div>
+</div>
+
+<div class="container">
+    <!--Identificação e Moradia-->
+    <div id="enderecoForm" class="destaque">
+        <span class="nome_destaque">CADASTRO</span>
+        <div class="col">
+            <div class="row"> 
+                <div class="campoUnico" style="flex: 2;"> 
+                    <label>Nome:</label>
+                    <input id="inputNome">
+                </div>
+                <div class="campoUnico" style="flex: 1;">
+                    <label>CPF:</label>
+                    <input id="inputCPF">
+                </div>
+            </div>
+            <div class="row"> 
+                <div class="campoUnico" style="flex: 1;"> 
+                    <label>CEP:</label>
+                    <input id="inputCEP">
+                </div>
+                <div class="campoUnico" style="flex: 1;">
+                    <label>Complemento:</label>
+                    <input id="inputComplemento">
+                </div>
+                <div class="row" style="flex: 1; gap: 5px;">
+                    <div class="campoUnico" style="flex: 0.3;">
+                        <label>Número:</label>
+                        <input id="inputNumero">
+                    </div>
+                    <div class="campoUnico" style="flex: 0.7;">
+                        <label for="selectBairro">Bairro:</label>
+                        <select id="selectBairro">
+                            <option value="0"></option>
+                            <option value="1">Centro</option>
+                            <option value="2">Zona I</option>
+                            <option value="3">Batel</option>
+                            <option value="4">São Roque</option>
+                            <option value="5">Itaipu A</option>
+                        </select> 
+                    </div>
+                </div>
+            </div>
+        
+        <!--Tabela Contatos-->
+        <div class="row" flex="1">
+            <label style="flex:1">Telefone:</label>
+            <label style="flex:1">Email:</label>
+        </div>
+        <div>
+            <table id="tabelaContatos" style="flex: 1;">
+                <tbody class="row" >
+                    <td><input class="inputTelefone" type="text" style="background-color: #e7eaee; width: 18rem;"></td>
+                    <td><input class="inputEmail" type="text" style="background-color: #e7eaee; width: 18rem;"></td>
+                    <td>
+                        <i onclick="adicionarLinha()" class="ri-add-circle-fill"></i>
+                    </td>
+                </tbody>
+            </table>
+        </div>
+
+        <!--Dados Finais sobre Moradia-->
+        <div class="row"> 
+            <div class="campoUnico" style="flex: 1;">
+                <label for="selectLogradouro">Logradouro:</label>
+                <select id="selectLogradouro">
+                    <option value="0"></option>
+                    <option value="1">Av. Juscelino Kubitschek</option>
+                    <option value="2">Rua Arapongas</option>
+                    <option value="3">Av. Batel</option>
+                    <option value="4">Rua Santos Dumont</option>
+                </select> 
+            </div>
+            <div class="row" style="gap: 5.5px; flex: 0.8;">
+                <div class="campoUnico" style="flex: 1">
+                    <label for="inputIdCidade">ID Cidade:</label>
+                    <input type="text" id="inputIdCidade"> 
+                </div>
+                <div class="campoUnico" style="justify-content: end; flex: 0.3;">
+                    <button type="button" onclick="validarCidade()" id="btnValidarCidade"><i class="ri-search-line"></i></button>
+                </div>
+            </div>
+            <div class="campoUnico" style="flex: 1.5; justify-content:end;">
+                <span id="cidadeInfo" class="validation-message"></span>
+            </div>
+        </div>
+
+        <!--Botão Salvar Cadastro-->
+        </div>
+            <button type="submit"onclick="CadastrarPessoa()" id="btnSalvar">Cadastrar</button>
+        </div>
+
+    <script src="endereco.js"></script>
+</body>
+</html>

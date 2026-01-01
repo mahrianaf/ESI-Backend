@@ -47,8 +47,13 @@ body{
     cursor: pointer;
 }
 
+.campoBusca.OS button:hover{
+    background-color:#676da3;
+    color: white;
+}
+
 .campoBusca button:hover{
-    background-color:#6a71af;
+    background-color:#af6a7f;
     color: white;
 }
 
@@ -56,7 +61,17 @@ body{
     position: absolute;
     margin-top: 13.7rem; /*aqui eh rem nao porcentagem*/
     right: 1.2rem;
-    background-color: black !important;
+    background-color: #464e8f !important;
+    font-weight: lighter;
+    color: white;
+    font-size: 0.9rem;
+}
+
+#user-add-receita{ /*nao esquecer que id's usam #!*/
+    position: absolute;
+    margin-top: 13.7rem; /*aqui eh rem nao porcentagem*/
+    right: 1.2rem;
+    background-color: #900946 !important;
     font-weight: lighter;
     color: white;
     font-size: 0.9rem;
@@ -173,6 +188,11 @@ input, select {
     background: #dfe4ea;
 }
 
+.row.receita input, 
+.row.receita select {
+    background-color: #ece5e8; /*#ece1e5;*/
+}
+
 .tabs {
     display: flex;
     gap: 5px;
@@ -195,8 +215,8 @@ input, select {
 
 .tab-btn.ativo {
     background-color: white;
-    color: #535fbe;
-    border-top: 3px solid #535fbe;
+    color: #000000;
+    border-top: 3px solid #000000;
     border-bottom: 1px solid white; /* Cobre a borda do container */
     position: relative;
     top: 1px;
@@ -253,6 +273,10 @@ th {
     margin-top: 0.3%;
 }
 
+.btn-add-row.receita{
+    background-color:  #ff006a; /*#fd2a82;*/
+}
+
 .rodape {
     display: flex;
     justify-content: flex-end;
@@ -269,4 +293,8 @@ button.btn-submit {
     border-radius: 4px;
     font-weight: bold;
     cursor: pointer;
+}
+
+button.btn-submit.receita{
+    background-color: #7d0f40; /*#900946;*/
 }

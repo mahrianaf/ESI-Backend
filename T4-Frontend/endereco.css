@@ -1,0 +1,221 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    justify-content: center;
+    align-items: center;
+}
+
+    
+table {
+    width: 100%;
+    margin-bottom: 0px;
+    align-items: left;
+}
+
+
+th, td {
+    text-align: left;
+    padding-right: 7px;
+    border-bottom: 0px solid #ccc;
+}
+
+th {
+    background-color: #fcfcfc;
+    font-size: 0.85rem;
+    border-top: 0px solid #ccc;
+}
+
+h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-top: 0px;
+}
+
+#campoSecundario{
+    display: none;
+}
+
+.container {
+    background-color: white;
+    padding-top: 2%;
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 1px solid #999;
+    position: relative;
+    z-index: 1;
+    width: 48%;
+    padding: 2.5%;
+    padding-bottom: 0.5%;
+    align-items: center;
+}
+
+#resultadoBusca{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.search-group {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: start;
+}
+
+.search-group input{
+    background-color: #fcfcfc;
+    color: Black;
+    position: relative;
+    border-radius: 8px;
+    width: 78%;
+    outline: none;
+    padding-left: 2rem; /*"paragrafo"*/
+    height: 1.7rem;
+    border-width: 1px;
+    border-color: #999;
+}
+
+.search-group button{
+    width: 5rem;
+    height: 1.8rem;
+    border-radius: 8px;
+    background-color: black;/*#485cf4;*/
+    border: 0px;
+    color: white;
+    position: absolute; /*usar isso para sobrepor o botao*/
+    cursor: pointer;
+    padding-left: 0.5rem;
+    margin-left: 35rem;
+}
+
+button{
+    width: 5rem;
+    height: 1.8rem;
+    border-radius: 8px;
+    background-color: black;/*#485cf4;*/
+    border: 0px;
+    color: white;
+    cursor: pointer;
+}
+
+#btnSalvar{
+    padding-left: 0.5rem;
+    margin-top: 1.7rem;
+    position: absolute;
+}
+
+button:hover{
+    font-weight: bold;
+}
+
+.card.consulta{
+    display: flex;
+    flex-direction: column;
+    gap:4px;
+}
+
+#btnValidarCidade{
+    background-color:#e7eaee;
+    color: black;
+    font-weight: bold;
+    width: 2rem;
+    height: 2rem;
+}
+
+col{
+    display: flex;
+    flex-direction: column;
+}
+
+.destaque {
+    background-color: #fcfcfc;
+    border: 1px dotted rgb(56, 57, 69);
+    padding: 3%;
+    border-radius: 5px;
+    padding-top: 4%;
+    position: relative;
+    width: 86%;
+    gap: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2.5rem;
+}
+
+.nome_destaque {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: white;
+    font-weight: bold;
+    color: black;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.nome_busca {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: white;
+    font-weight: bold;
+    color: black;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    border: 1.6px solid rgb(56, 57, 69);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 10px;
+}
+
+.campoUnico {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.2rem;
+}
+
+input, select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #000;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background: #e7eaee;
+}
+
+label {
+    display: block;
+    font-weight: lighter;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.row{
+    display: flex;
+    flex: row;
+    gap:1rem;
+    display: flex; /* Coloca um ao lado do outro */
+    gap: 1%;
+}
+
+h1 {
+    color: #0b2241;
+    text-align: center;
+}
+
+.card {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.validation-message{
+    margin: 0px;
+    padding: 0px;
+}
