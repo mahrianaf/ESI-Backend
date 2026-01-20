@@ -19,7 +19,7 @@ table {
 
 th, td {
     text-align: left;
-    padding-right: 7px;
+    padding-right: 4px;
     border-bottom: 0px solid #ccc;
 }
 
@@ -51,7 +51,7 @@ h2 {
     border: 1px solid #999;
     position: relative;
     z-index: 1;
-    width: 48%;
+    width: 44%;
     padding: 2.5%;
     padding-bottom: 0.5%;
     align-items: center;
@@ -64,8 +64,9 @@ h2 {
 .search-group {
     display: flex;
     flex-direction: row;
-    align-items: end;
+    align-items: start;
     justify-content: start;
+    gap: 1rem;
 }
 
 .search-group input{
@@ -73,7 +74,7 @@ h2 {
     color: Black;
     position: relative;
     border-radius: 8px;
-    width: 78%;
+    /*width: 78%;*/
     outline: none;
     padding-left: 2rem; /*"paragrafo"*/
     height: 1.7rem;
@@ -88,10 +89,9 @@ h2 {
     background-color: black;/*#485cf4;*/
     border: 0px;
     color: white;
-    position: absolute; /*usar isso para sobrepor o botao*/
+    position: absolute; /*usar absolute para sobrepor o botao*/
     cursor: pointer;
     padding-left: 0.5rem;
-    margin-left: 35rem;
 }
 
 button{

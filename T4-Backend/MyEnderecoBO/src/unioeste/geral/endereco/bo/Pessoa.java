@@ -1,6 +1,10 @@
 package unioeste.geral.endereco.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface Pessoa {
+
     int getID();
     void setID(int id);
     String getNome();

@@ -2,15 +2,15 @@ package unioeste.geral.endereco.bo;
 import java.io.Serializable;
 
 public class Medicamento implements Serializable{
-    private int codMedicamento;
+    private String codMedicamento;
     private String nome;
 
     public Medicamento(){}
 
-    public void setCodMedicamento(int codMedicamento) {
+    public void setCodMedicamento(String codMedicamento) {
         this.codMedicamento = codMedicamento;
     }
-    public int getCodMedicamento() {
+    public String getCodMedicamento() {
         return codMedicamento;
     }
     public void setNome(String nome) {

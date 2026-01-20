@@ -45,6 +45,12 @@ body{
     color: white;
     position: absolute; /*usar isso para sobrepor o botao*/
     cursor: pointer;
+
+}
+
+.campoBusca.geral {
+    width: 14rem;
+    margin-left: 31rem;
 }
 
 .campoBusca.OS button:hover{
@@ -87,6 +93,7 @@ body{
     z-index: 1;
     width: 48%;
     padding: 2.5%;
+    margin-bottom: 2rem;
 }
 
 .destaque {
@@ -105,9 +112,10 @@ body{
     left: 10px;
     background: white;
     font-weight: bold;
-    color: black;
+    color: black; 
     font-size: 1rem;
     margin-bottom: 10px;
+    border: 2px solid rgb(56, 57, 69);
 }
 
 .campoUnico {
@@ -140,7 +148,7 @@ body{
         
 textarea {
     width: 100%;           
-    height: 4rem;       
+    height: 2rem;       
     resize: none; /* Opcional: impede o usuário de deformar o quadrado */
     padding: 10px; /* Dá um respiro para o texto não encostar na borda */
     box-sizing: border-box; /* Garante que o padding não aumente o tamanho do campo */
@@ -175,7 +183,7 @@ label {
     font-size: 0.9rem;
 }
 
-#nro,#data{
+#nroRM,#dataRM{
     background: #ffffff;
 }
 

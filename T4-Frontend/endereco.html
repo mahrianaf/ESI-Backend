@@ -18,20 +18,20 @@
         <h2>Sistema de Consultas</h2>
 
         <div class="search-group">
-            <input type="text" id="inputCepBusca" placeholder="Buscar endereço por CEP">
-            <button onclick="consultarEndereco('cep')">Buscar</button>
+            <div style="flex: 4;"><input type="text" id="inputCepBusca" placeholder="Buscar endereço por CEP"></div>
+            <div style="flex: 1;"><button onclick="consultarEndereco('cep')">Buscar</button></div>
         </div>
         <div class="search-group">
-            <input type="text" id="inputIdBusca" placeholder="Buscar endereço por ID">
-            <button onclick="consultarEndereco('id')">Buscar</button>
+            <div style="flex: 4;"><input type="text" id="inputIdBusca" placeholder="Buscar endereço por ID"></div>
+            <div style="flex: 1;"><button onclick="consultarEndereco('id')">Buscar</button></div>
         </div>
         <div class="search-group"> 
-            <input type="text" id="inputCepViaCep" placeholder="Buscar endereço ViaCEP">
-            <button onclick="consultarEndereco('viacep')">ViaCep</button>
+            <div style="flex: 4;"><input type="text" id="inputCepViaCep" placeholder="Buscar endereço ViaCEP"></div>
+            <div style="flex: 1;"><button onclick="consultarEndereco('viacep')">ViaCep</button></div>
         </div>
         <div class="search-group"> 
-            <input type="text" id="inputCpfBusca" placeholder="Buscar cliente/paciente por CPF">
-            <button onclick="consultarPessoa()">CPF</button>
+            <div style="flex: 4;"><input type="text" id="inputCpfBusca" placeholder="Buscar cliente/paciente por CPF"></div>
+            <div style="flex: 1;"><button onclick="consultarPessoa()">CPF</button></div>
         </div>
     </div>
 
@@ -43,7 +43,9 @@
     <!--Identificação e Moradia-->
     <div id="enderecoForm" class="destaque">
         <span class="nome_destaque">CADASTRO</span>
-        <div class="col">
+
+        <!--Dados Cadastrais-->
+        <div class="col"> 
             <div class="row"> 
                 <div class="campoUnico" style="flex: 2;"> 
                     <label>Nome:</label>
@@ -81,54 +83,54 @@
                     </div>
                 </div>
             </div>
-        
-        <!--Tabela Contatos-->
-        <div class="row" flex="1">
-            <label style="flex:1">Telefone:</label>
-            <label style="flex:1">Email:</label>
-        </div>
-        <div>
-            <table id="tabelaContatos" style="flex: 1;">
-                <tbody class="row" >
-                    <td><input class="inputTelefone" type="text" style="background-color: #e7eaee; width: 18rem;"></td>
-                    <td><input class="inputEmail" type="text" style="background-color: #e7eaee; width: 18rem;"></td>
-                    <td>
-                        <i onclick="adicionarLinha()" class="ri-add-circle-fill"></i>
-                    </td>
-                </tbody>
-            </table>
-        </div>
 
-        <!--Dados Finais sobre Moradia-->
-        <div class="row"> 
-            <div class="campoUnico" style="flex: 1;">
-                <label for="selectLogradouro">Logradouro:</label>
-                <select id="selectLogradouro">
-                    <option value="0"></option>
-                    <option value="1">Av. Juscelino Kubitschek</option>
-                    <option value="2">Rua Arapongas</option>
-                    <option value="3">Av. Batel</option>
-                    <option value="4">Rua Santos Dumont</option>
-                </select> 
+            <!--Tabela Contatos-->
+            <div class="row" flex="1">
+                <label style="flex:1">Telefone:</label>
+                <label style="flex:1">Email:</label>
             </div>
-            <div class="row" style="gap: 5.5px; flex: 0.8;">
-                <div class="campoUnico" style="flex: 1">
-                    <label for="inputIdCidade">ID Cidade:</label>
-                    <input type="text" id="inputIdCidade"> 
+            <div>
+                <table id="tabelaContatos">
+                    <tbody class="row" style="flex: 1;">
+                        <td style="flex: 1;"><input class="inputTelefone" type="text" style="background-color: #e7eaee;"></td>
+                        <td style="flex: 1;"><input class="inputEmail" type="text" style="background-color: #e7eaee;"></td>
+                        <td style="flex: 0.3">
+                            <i onclick="adicionarLinha()" class="ri-add-circle-fill"></i>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--Dados Finais sobre Moradia-->
+            <div class="row"> 
+                <div class="campoUnico" style="flex: 1;">
+                    <label for="selectLogradouro">Logradouro:</label>
+                    <select id="selectLogradouro">
+                        <option value="0"></option>
+                        <option value="1">Av. Juscelino Kubitschek</option>
+                        <option value="2">Rua Arapongas</option>
+                        <option value="3">Av. Batel</option>
+                        <option value="4">Rua Santos Dumont</option>
+                    </select> 
                 </div>
-                <div class="campoUnico" style="justify-content: end; flex: 0.3;">
-                    <button type="button" onclick="validarCidade()" id="btnValidarCidade"><i class="ri-search-line"></i></button>
+                <div class="row" style="gap: 5.5px; flex: 0.8;">
+                    <div class="campoUnico" style="flex: 1">
+                        <label for="inputIdCidade">ID Cidade:</label>
+                        <input type="text" id="inputIdCidade"> 
+                    </div>
+                    <div class="campoUnico" style="justify-content: end; flex: 0.3;">
+                        <button type="button" onclick="validarCidade()" id="btnValidarCidade"><i class="ri-search-line"></i></button>
+                    </div>
+                </div>
+                <div class="campoUnico" style="flex: 1.5; justify-content:end;">
+                    <span id="cidadeInfo" class="validation-message"></span>
                 </div>
             </div>
-            <div class="campoUnico" style="flex: 1.5; justify-content:end;">
-                <span id="cidadeInfo" class="validation-message"></span>
-            </div>
-        </div>
+        </div> 
 
         <!--Botão Salvar Cadastro-->
-        </div>
-            <button type="submit"onclick="CadastrarPessoa()" id="btnSalvar">Cadastrar</button>
-        </div>
+        <button type="submit"onclick="CadastrarPessoa()" id="btnSalvar">Cadastrar</button>
+    </div>
 
     <script src="endereco.js"></script>
 </body>

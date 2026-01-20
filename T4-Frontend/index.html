@@ -9,6 +9,7 @@
     <title>Trabalho ESI</title>
 </head>
 <body>
+    <!--Botões para troca de página-->
     <div class="tabs">
         <button class="tab-btn ativo" onclick="openTab('OrdemServico', this)">Ordem de Serviço</button>
         <button class="tab-btn" onclick="openTab('ReceitaMedica', this)">Receita Médica</button>
@@ -20,113 +21,117 @@
             <div class="row">
                 <div class="campoUnico">
                     <label class="inicio" for="nro">Número OS</label>
-                    <input id="nro" placeholder="Ex: 001">
+                    <input id="numeroOS" placeholder="Ex: 001">
                 </div>
                 <div class="campoUnico">
                     <label class="inicio"  for="data">Data Emissão</label>
-                    <input type="date" id="data">
-                </div>
-                <div class="campoBusca OS">
-                    <input placeholder="Busque aqui">
-                    <button><i class="ri-search-line"></i></button>
+                    <input type="date" id="dataEmissaoOS">
                 </div>
             </div>
             <div class="espaco"></div>
+
             <!--Dados Cliente-->
             <div class="destaque">
                 <span class="nome_destaque">Dados do Cliente</span>
-                <button type="button" id="user-add" class="btn-add-row"><i class="ri-user-add-line" onclick="location.href='endereco.html?tipo=cliente';">Cadastrar/ Consultar</i></button>
+
+                <!--Botão cadastro/consulta Cliente-->
+                <button id="user-add" class="btn-add-row">
+                    <i class="ri-user-add-line" onclick="location.href='endereco.html?tipo=cliente';">Cadastrar/ Consultar</i>
+                </button>
                 <div class="row"> <!--Dados Cliente-->
                     <div class="campoUnico" style="flex: 0.5;"> 
                         <label>Código:</label>
-                        <input id="nro" placeholder="Ex: 001">
+                        <input id="codC" placeholder="Ex: 001">
                     </div>
                     <div class="campoUnico" style="flex: 2;">
                         <label>Nome:</label>
-                        <input disabled">
+                        <input id="nomeC" disabled">
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>CPF:</label>
-                        <input disabled>
+                        <input id="cpfC" disabled>
                     </div>
                 </div>
                 <div class="row"> <!--Dados Moradia-->
                     <div class="campoUnico" style="flex: 1;">
                         <label>Bairro:</label>
-                        <input disabled>
+                        <input id="bairroC" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>Rua:</label>
-                        <input disabled>
+                        <input id="ruaC" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 0.8;">
                         <label>Complemento:</label>
-                        <input disabled>
+                        <input id="compC" disabled>
                     </div>
                 </div>
                 <div class="row"> <!--Dados Cidade-->
                     <div class="campoUnico" style="flex: 0.3;">
                         <label>Nro:</label>
-                        <input disabled>
+                        <input id="nroC" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>CEP:</label>
-                        <input disabled>
+                        <input id="cepC" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>Cidade:</label>
-                        <input disabled>
+                        <input id="cidC" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 0.3;">
                         <label>UF:</label>
-                        <input disabled>
+                        <input id="ufC" disabled>
                     </div>
                 </div>
                 <div class="row"> <!--Dados Contato-->
                     <div class="campoUnico" style="flex: 1;"> 
                         <label>Email:</label>
-                        <input disabled>
+                        <input id="emailsC" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1">
                         <label>Telefone:</label>
-                        <input disabled>
+                        <input id="fonesC" disabled>
                     </div>
                 </div>
             </div>
             <div class="espaco"></div>
+
             <!--Dados Atendente-->
             <div class="destaque">
                 <span class="nome_destaque">Dados do Atendente</span>
+
                 <div class="row"> <!--Dados Atendente-->
                     <div class="campoUnico" style="flex: 0.17;"> 
                         <label>Código:</label>
-                        <input id="nro" placeholder="Ex: 001">
+                        <input id="codA" placeholder="Ex: 001">
                     </div>
                     <div class="campoUnico" style="flex: 1">
                         <label>Nome:</label>
-                        <input disabled>
+                        <input id="nomeA" disabled>
                     </div>
                 </div>
                 <div class="row"> <!--Dados Contato-->
                     <div class="campoUnico" style="flex: 1;"> 
                         <label>Email:</label>
-                        <input disabled>
+                        <input id="emailsA" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>Telefone:</label>
-                        <input disabled>
+                        <input id="fonesA" disabled>
                     </div>
                 </div>
             </div> 
             <div class="espaco"></div>
+
             <!--Descrição do Problema-->
             <form class="destaque"> 
                 <span class="nome_destaque">Descrição do Problema</span>
                 <textarea id="DP" placeholder=""></textarea>
             </form>
             <div class="espaco"></div>
-            <!--Serviços Realizados-->
-            <div>
+
+            <div> <!--Serviços Realizados e Valor Total-->
                 <div class="row">
                     <h3>Serviços Realizados</h3>
                     <button type="button" class="btn-add-row" onclick="adicionarLinha()">+ Adicionar</button>
@@ -139,16 +144,26 @@
                             <th style="width: 80rem;">Valor do Serviço</th>
                         </tr>
                     </thead>
+                    <tbody >
+                        <tr>
+                            <td><input id="servico" type="text" placeholder="" style="background-color: #fcfcfc;"></td>
+                            <td><input id="nomeTipo" disabled></td>
+                            <td><input id="valor" disabled></td>
+                        </tr>
+                    </tbody>
                </table>
                <div class="espaco"></div>
+
+               <!--Valor Total da Ordem Servico-->
                <div class="row" style="width: 27%; gap: 15px; align-items: end;"> 
                     <label>TOTAL</label>
-                    <input id="total" placeholder="R$ 0.00" style="padding-left: 5rem;">
+                    <input id="total" placeholder="R$ 0.00" style="padding-left: 4.2rem;">
                 </div>
             </div>
+
             <!--Botão Registrar OS-->
             <div class="rodape"> 
-                <button type="submit" class="btn-submit">Registrar Ordem de Serviço</button>
+                <button class="btn-submit" onclick="cadastrarOS()">Registrar Ordem de Serviço</button>
             </div>
         </div>
 
@@ -158,154 +173,162 @@
             <div class="row">
                 <div class="campoUnico">
                     <label class="inicio" for="nro">Número Receita</label>
-                    <input id="nro" placeholder="Ex: 001">
+                    <input id="nroRM" placeholder="Ex: 001">
                 </div>
                 <div class="campoUnico">
                     <label class="inicio"  for="data">Data Emissão</label>
-                    <input type="date" id="data">
+                    <input type="date" id="dataRM">
                 </div>
-                <div class="campoBusca">
+                <!--<div class="campoBusca">
                     <input placeholder="Busque aqui">
                     <button><i class="ri-search-line"></i></button>
-                </div>
+                </div>-->
             </div>
             <div class="espaco"></div>
+
             <!--Dados Medico-->
             <div class="destaque">
                 <span class="nome_destaque">Dados do Médico</span>
+
                 <div class="row receita"> <!--Dados Medico-->
                     <div class="campoUnico" style="flex: 0.5;"> 
                         <label>CRM:</label>
-                        <input id="nro" placeholder="Ex: 001">
+                        <input id="crm" placeholder="Ex: 001">
                     </div>
                     <div class="campoUnico" style="flex: 2;">
                         <label>Nome:</label>
-                        <input disabled">
+                        <input id="nomeM" disabled">
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>CPF:</label>
-                        <input disabled>
+                        <input id="cpfM" disabled>
                     </div>
                 </div>
                 <div class="row receita"> <!--Dados Moradia-->
                     <div class="campoUnico" style="flex: 1;">
                         <label>Bairro:</label>
-                        <input disabled>
+                        <input id="bairroM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>Rua:</label>
-                        <input disabled>
+                        <input id="ruaM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 0.8;">
                         <label>Complemento:</label>
-                        <input disabled>
+                        <input id="compM" disabled>
                     </div>
                 </div>
                 <div class="row receita"> <!--Dados Cidade-->
                     <div class="campoUnico" style="flex: 0.3;">
                         <label>Nro:</label>
-                        <input disabled>
+                        <input id="nroM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>CEP:</label>
-                        <input disabled>
+                        <input id="cepM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>Cidade:</label>
-                        <input disabled>
+                        <input id="cidM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 0.3;">
                         <label>UF:</label>
-                        <input disabled>
+                        <input id="ufM" disabled>
                     </div>
                 </div>
                 <div class="row receita"> <!--Dados Contato-->
                     <div class="campoUnico" style="flex: 1;"> 
                         <label>Email:</label>
-                        <input disabled>
+                        <input id="emailsM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1">
                         <label>Telefone:</label>
-                        <input disabled>
+                        <input id="fonesM" disabled>
                     </div>
                 </div>
             </div>
             <div class="espaco"></div>
+
             <!--Dados Paciente-->
             <div class="destaque">
                 <span class="nome_destaque">Dados do Paciente</span>
-                <button type="button" id="user-add-receita" class="btn-add-row" onclick="location.href='endereco.html?tipo=paciente';"><i class="ri-user-add-line">Cadastrar/ Consultar</i></button>
+
+                <!--Botão cadastrar/consultar Paciente-->
+                <button type="button" id="user-add-receita" class="btn-add-row" onclick="location.href='endereco.html?tipo=paciente';">
+                    <i class="ri-user-add-line">Cadastrar/ Consultar</i>
+                </button>
                 <div class="row receita"> <!--Dados Paciente-->
                     <div class="campoUnico" style="flex: 0.17;"> 
                         <label>CPF:</label>
-                        <input id="nro" placeholder="Ex: 001">
+                        <input id="cpfP" placeholder="Ex: 001">
                     </div>
                     <div class="campoUnico" style="flex: 1">
                         <label>Nome:</label>
-                        <input disabled>
+                        <input id="nomeP" disabled>
                     </div>
                 </div>
                 <div class="row receita"> <!--Dados Moradia-->
                     <div class="campoUnico" style="flex: 1;">
                         <label>Bairro:</label>
-                        <input disabled>
+                        <input id="bairroP" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>Rua:</label>
-                        <input disabled>
+                        <input id="ruaP" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 0.8;">
                         <label>Complemento:</label>
-                        <input disabled>
+                        <input id="compP" disabled>
                     </div>
                 </div>
                 <div class="row receita"> <!--Dados Cidade-->
                     <div class="campoUnico" style="flex: 0.3;">
                         <label>Nro:</label>
-                        <input disabled>
+                        <input id="nroP" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>CEP:</label>
-                        <input disabled>
+                        <input id="cepP" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
                         <label>Cidade:</label>
-                        <input disabled>
+                        <input id="cidP" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 0.3;">
                         <label>UF:</label>
-                        <input disabled>
+                        <input id="ufP" disabled>
                     </div>
                 </div>
                 <div class="row receita"> <!--Dados Contato-->
                     <div class="campoUnico" style="flex: 1;"> 
                         <label>Email:</label>
-                        <input disabled>
+                        <input id="emailsP" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1">
                         <label>Telefone:</label>
-                        <input disabled>
+                        <input id="fonesP" disabled>
                     </div>
                 </div>
             </div> 
             <div class="espaco"></div>
+
             <!--Tratamento Indicado-->
             <div class="destaque"> 
                 <span class="nome_destaque">Tratamento Indicado</span>
                 <div class="row receita"> 
                     <div class="campoUnico" style="flex: 0.17;"> 
                         <label>Código CID:</label>
-                        <input id="nro" placeholder="Ex: 001">
+                        <input id="CID" placeholder="Ex: 001">
                     </div>
                     <div class="campoUnico" style="flex: 1">
                         <label>Nome CID:</label>
-                        <input disabled>
+                        <input id="nomeCID" disabled>
                     </div>
                 </div>
             </div>
             <div class="espaco"></div>
-            <!--Medicamentos Prescritos-->
-            <div>
+            
+            <div><!--Medicamentos Prescritos-->
                 <div class="row">
                     <h3>Medicamentos Prescritos</h3>
                     <button type="button" class="btn-add-row receita" onclick="addMedicamento()">+ Adicionar</button>
@@ -319,14 +342,40 @@
                             <th style="width: 80rem;">Posologia</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr>
+                            <td><input id="med" type="text" placeholder="" style="background-color: #fcfcfc;"></td>
+                            <td><input id="inicio" type="date" style="background-color: #fcfcfc;"></td>
+                            <td><input id="fim" type="date" style="background-color: #fcfcfc;"></td>
+                            <td><input id="poso" type="text" placeholder="" style="background-color: #fcfcfc;"></td>
+                        </tr>
+                    </tbody>
                </table>
             </div>
+
             <!--Botão Registrar Receita-->
             <div class="rodape"> 
-                <button type="submit" class="btn-submit receita">Registrar Receita Médica</button>
+                <button class="btn-submit receita" onclick="cadastrarRM()">Registrar Receita Médica</button>
             </div>
         </div>
     </div>
+    <!--Resultado Consultas-->
+    <div class="container">
+        <h2>ÁREA DE CONSULTA</h2>
+        <div class="espaco"></div>
+        <div class="col">
+        <div class="campoBusca OS" style="width: 14rem; margin-left: 20rem; ">
+            <input id="buscaOS" placeholder="Buscar Ordem">
+            <button onclick="consultarOS()"><i class="ri-search-line"></i></button>
+        </div>
+        <div class="campoBusca" style="width: 14rem; margin-left: 1rem;">
+            <input id="buscaRM" placeholder="Buscar Receita">
+            <button onclick="consultarRM()"><i class="ri-search-line"></i></button>
+        </div>
+        </div>
+        <div id="resultadoBusca" style="display: none; margin-top: 1rem;"></div>
+    </div>
+
     <script src="Servicos.js"></script>
 </body>
 </html>

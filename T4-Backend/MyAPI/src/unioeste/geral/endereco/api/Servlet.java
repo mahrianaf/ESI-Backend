@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 // Imports para JSON
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,60 +39,153 @@ public class Servlet extends HttpServlet {
 
         try {
             JsonNode root = mapper.readTree(request.getInputStream());
-            String tipoUsuario = root.path("tipo").asText();
+            String acao = root.path("acao").asText();
 
-            Bairro bairro = new Bairro();
-            bairro.setIdBairro(root.path("bairro").asInt());
+            //Cadastrar Endereco Completo
+            if("cadastrarPessoa".equalsIgnoreCase(acao)){
+                String tipoUsuario = root.path("tipo").asText();
+                Bairro bairro = new Bairro();
+                bairro.setIdBairro(root.path("bairro").asInt());
+                Cidade cidade = new Cidade();
+                cidade.setIdCidade(root.path("cidade").asInt());
+                Logradouro logradouro = new Logradouro();
+                logradouro.setIdLogradouro(root.path("logradouro").asInt());
 
-            Cidade cidade = new Cidade();
-            cidade.setIdCidade(root.path("cidade").asInt());
+                Endereco endereco = new Endereco();
+                endereco.setCEP(root.path("cep").asText());
+                endereco.setBairro(bairro);
+                endereco.setCidade(cidade);
+                endereco.setLogradouro(logradouro);
 
-            Logradouro logradouro = new Logradouro();
-            logradouro.setIdLogradouro(root.path("logradouro").asInt());
+                List<String> listaEmails = new ArrayList<>();
+                root.path("emails").forEach(node -> listaEmails.add(node.asText()));
+                List<String> listaTelefones = new ArrayList<>();
+                root.path("telefones").forEach(node -> listaTelefones.add(node.asText()));
 
-            Endereco endereco = new Endereco();
-            endereco.setCEP(root.path("cep").asText());
-            endereco.setBairro(bairro);
-            endereco.setCidade(cidade);
-            endereco.setLogradouro(logradouro);
+                Object resultado;
 
-            List<String> listaEmails = new ArrayList<>();
-            root.path("emails").forEach(node -> listaEmails.add(node.asText()));
+                //Verificação Tipo Usuário
+                if ("CLIENTE".equalsIgnoreCase(tipoUsuario)) {
+                    Cliente cliente = new Cliente();
+                    cliente.setNome(root.path("nome").asText());
+                    cliente.setCPF(root.path("cpf").asText());
+                    cliente.setNroMoradia(root.path("nro").asInt());
+                    cliente.setComplemento(root.path("complemento").asText());
+                    cliente.setEndereco(endereco);
 
-            List<String> listaTelefones = new ArrayList<>();
-            root.path("telefones").forEach(node -> listaTelefones.add(node.asText()));
+                    resultado = manager.cadastrarPessoa(cliente, listaEmails, listaTelefones, tipoUsuario);
 
-            Object resultado;
+                } else if ("PACIENTE".equalsIgnoreCase(tipoUsuario)) {
+                    Paciente paciente = new Paciente();
+                    paciente.setNome(root.path("nome").asText());
+                    paciente.setCPF(root.path("cpf").asText());
+                    paciente.setNroMoradia(root.path("nro").asInt());
+                    paciente.setComplemento(root.path("complemento").asText());
+                    paciente.setEndereco(endereco);
 
-            //Verificação Tipo Usuário
-            if ("CLIENTE".equalsIgnoreCase(tipoUsuario)) {
-                Cliente cliente = new Cliente();
-                cliente.setNome(root.path("nome").asText());
-                cliente.setCPF(root.path("cpf").asText());
-                cliente.setNroMoradia(root.path("nro").asInt());
-                cliente.setComplemento(root.path("complemento").asText());
-                cliente.setEndereco(endereco);
+                    resultado = manager.cadastrarPessoa(paciente, listaEmails, listaTelefones, tipoUsuario);
 
-                resultado = manager.cadastrarPessoa(cliente, listaEmails, listaTelefones);
+                } else {
+                    throw new IllegalArgumentException("Tipo de usuário inválido: " + tipoUsuario);
+                }
+                //Retorno Objeto Preenchido (Cliente ou Paciente)
+                response.setStatus(HttpServletResponse.SC_CREATED);
+                mapper.writeValue(response.getWriter(), resultado);
 
-            } else if ("PACIENTE".equalsIgnoreCase(tipoUsuario)) {
-                Paciente paciente = new Paciente();
-                paciente.setNome(root.path("nome").asText());
-                paciente.setCPF(root.path("cpf").asText());
-                paciente.setNroMoradia(root.path("nro").asInt());
-                paciente.setComplemento(root.path("complemento").asText());
-                paciente.setEndereco(endereco);
+            //Registrar Ordem de Servico
+            } else if ("ordemServico".equalsIgnoreCase(acao)){
+                OrdemServico os = new OrdemServico();
+                os.setNroOrdemServico(root.path("nrOS").asInt());
+                os.setDataEmissaoOS(LocalDate.parse(root.path("dataOS").asText()));
 
-                resultado = manager.cadastrarPessoa(paciente, listaEmails, listaTelefones);
+                Cliente cliente= new Cliente();
+                cliente.setID(root.path("codCliente").asInt());
+                os.setCliente(cliente);
 
+                Atendente atendente= new Atendente();
+                atendente.setCodAtendente(root.path("codAtendente").asInt());
+                os.setAtendente(atendente);
+
+                os.setDescricaoProblema(root.path("descricao").asText());
+                os.setTotal((float) root.path("totalOS").asDouble());
+
+                List<ServicoOS> listaItens = new ArrayList<>();
+
+                //Pega o primeiro serviço (o fixo do HTML)
+                String codFixo = root.path("codServico").asText();
+                if (!codFixo.isEmpty()) {
+                    Servico s = new Servico();
+                    s.setCodServico(codFixo);
+                    ServicoOS ponte = new ServicoOS();
+                    ponte.setServico(s);
+                    ponte.setOrdemservico(os);
+                    listaItens.add(ponte);
+                }
+
+                //Pega os serviços dinâmicos (da lista JS)
+                root.path("codServicoJS").forEach(node -> {
+                    Servico s = new Servico();
+                    s.setCodServico(node.asText()); //node já é a string do código
+                    ServicoOS ponte = new ServicoOS();
+                    ponte.setServico(s);
+                    ponte.setOrdemservico(os);
+                    listaItens.add(ponte);
+                });
+                manager.registrarOS(os, listaItens);
+
+                response.setStatus(HttpServletResponse.SC_CREATED);
+                Map<String, String> sucesso = new HashMap<>();
+                sucesso.put("message", "Ordem de Serviço " + os.getNroOrdemServico() + " registrada!");
+                mapper.writeValue(response.getWriter(), sucesso);
+
+            //Registrar Receita Medica
+            } else if ("receitaMedica".equalsIgnoreCase(acao)) {
+                ReceitaMedica rm = new ReceitaMedica();
+                rm.setNroReceita(root.path("nrRM").asInt());
+                rm.setDataEmissao(LocalDate.parse(root.path("dataRM").asText()));
+
+                //Objetos temporários para busca por CPF/CRM
+                Medico m = new Medico();
+                m.setCRM(root.path("crm").asText());
+                rm.setMedico(m);
+
+                Paciente p = new Paciente();
+                p.setCPF(root.path("cpfPaciente").asText());
+                rm.setPaciente(p);
+
+                CID c = new CID();
+                c.setCodCID(root.path("codCID").asText());
+                rm.setCid(c);
+
+                List<Prescricao> listaItens = new ArrayList<>();
+                root.path("itens").forEach(node -> {
+                    Prescricao pr = new Prescricao();
+                    Medicamento med = new Medicamento();
+
+                    //asText() para garantir "06815" como texto
+                    String codigoComZero = node.path("medicamento").asText();
+                    med.setCodMedicamento(codigoComZero);
+                    //med.setCodMedicamento(node.path("medicamento").asText());
+                    pr.setMedicamento(med);
+                    pr.setDataUsoInicial(LocalDate.parse(node.path("dataInicio").asText()));
+                    pr.setDataUsoFinal(LocalDate.parse(node.path("dataFim").asText()));
+                    pr.setPosologia(node.path("posologia").asText());
+                    pr.setReceitaMedica(rm);
+                    listaItens.add(pr);
+                });
+
+                try {
+                    manager.registrarReceita(rm, listaItens);
+                    response.setStatus(HttpServletResponse.SC_CREATED);
+                    mapper.writeValue(response.getWriter(), Map.of("message", "Sucesso!"));
+                } catch (Exception e) {
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    mapper.writeValue(response.getWriter(), Map.of("message", e.getMessage()));
+                }
             } else {
-                throw new IllegalArgumentException("Tipo de usuário inválido: " + tipoUsuario);
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                mapper.writeValue(response.getWriter(), Map.of("message", "Ação '" + acao + "' não reconhecida."));
             }
-
-            //Retorno Objeto Preenchido (Cliente ou Paciente)
-            response.setStatus(HttpServletResponse.SC_CREATED);
-            mapper.writeValue(response.getWriter(), resultado);
-
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             Map<String, String> erro = new HashMap<>();
@@ -108,17 +202,101 @@ public class Servlet extends HttpServlet {
 
         try {
 
-            //Busca ViaCEP: /api/endereco/viacep?cep=...
-            if (pathInfo != null && pathInfo.contains("/viacep")) {
-                String cepViaCep = request.getParameter("cep");
+            //Busca Pessoa por CPF: /api/endereco?cod=...&pessoa=...
+            String cod = request.getParameter("cod");
+            String user = request.getParameter("pessoa");
+            if (cod != null && !cod.isEmpty() && user!=null && !user.isEmpty()) {
 
-                if (cepViaCep != null && !cepViaCep.isEmpty()) {
-                    Endereco enderecoViaCep = manager.obterEnderecoPorCepViaCEP(cepViaCep);
+                Pessoa pessoa = manager.obterPessoaPorID(cod, user);
+                List<Object> telefones = manager.obterTelefonesCompletos(pessoa.getID(), user);
+                List<Object> emails = manager.obterEmailsCompletos(pessoa.getID(), user);
 
-                    response.setStatus(HttpServletResponse.SC_OK); // 200 OK
-                    mapper.writeValue(response.getWriter(), enderecoViaCep);
-                    return;
+                //Cria um Map para unir tudo em um único JSON
+                Map<String, Object> resultadoFinal = new HashMap<>();
+                resultadoFinal.put("fones", telefones);
+                resultadoFinal.put("emails", emails);
+                resultadoFinal.put("dados", pessoa);
+
+                response.setStatus(HttpServletResponse.SC_OK);
+                mapper.writeValue(response.getWriter(), resultadoFinal); //Envia o MAP
+                return;
+            }
+
+            //Busca Servico: /api/endereco?codServico
+            String codServico = request.getParameter("codServico");
+            if (codServico != null && !codServico.isEmpty()) {
+                Servico servico = manager.buscarServico(codServico);
+
+                response.setStatus(HttpServletResponse.SC_OK); //200 OK
+                mapper.writeValue(response.getWriter(), servico);
+                return;
+            }
+
+            String buscaRM = request.getParameter("buscaRM");
+            if (buscaRM != null && !buscaRM.isEmpty()) {
+                ReceitaMedica rm = manager.buscarReceitaCompleta(buscaRM);
+                List<Prescricao> prescricoes = manager.listarPrescricoes(buscaRM);
+
+                if (rm != null) {
+                    Map<String, Object> jsonFinal = new HashMap<>();
+
+                    //1. Dados da Receita
+                    Map<String, Object> dadosRM = new HashMap<>();
+                    dadosRM.put("nroReceita", rm.getNroReceita());
+                    dadosRM.put("dataEmissao", rm.getDataEmissao().toString());
+                    dadosRM.put("paciente", rm.getPaciente().getNome());
+                    dadosRM.put("medico", rm.getMedico().getNome());
+                    dadosRM.put("cidNome", rm.getCid().getNome());
+
+                    //2. Lista de Prescrições
+                    List<Map<String, Object>> listaItens = new ArrayList<>();
+                    for (Prescricao p : prescricoes) {
+                        Map<String, Object> item = new HashMap<>();
+                        item.put("medicamento", p.getMedicamento().getNome());
+                        item.put("posologia", p.getPosologia());
+                        item.put("inicio", p.getDataUsoInicial().toString());
+                        item.put("fim", p.getDataUsoFinal().toString());
+                        listaItens.add(item);
+                    }
+
+                    jsonFinal.put("receita", dadosRM);
+                    jsonFinal.put("itens", listaItens);
+
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    mapper.writeValue(response.getWriter(), jsonFinal);
                 }
+            }
+
+            //Busca Servico: /api/endereco?CID
+            String cid = request.getParameter("CID");
+            if (cid != null && !cid.isEmpty()) {
+                CID codCID = manager.buscarCID(cid);
+
+                response.setStatus(HttpServletResponse.SC_OK);
+                mapper.writeValue(response.getWriter(), codCID);
+                return;
+            }
+
+            //Busca Servico: /api/endereco?buscaOS
+            String buscaOS = request.getParameter("buscaOS");
+            if (buscaOS != null && !buscaOS.isEmpty()) {
+                OrdemServico os = manager.buscarOrdemServico(buscaOS);
+                List<ServicoOS> servico = manager.buscarServicoOS(buscaOS);
+
+                Map<String, Object> resultadoFinal = new HashMap<>();
+                resultadoFinal.put("nroOS", os.getNroOrdemServico());
+                resultadoFinal.put("data", os.getDataEmissaoOS().toString());
+                resultadoFinal.put("clienteId", os.getCliente().getID());
+                resultadoFinal.put("total", os.getTotal());
+
+                List<String> codigosServicos = new ArrayList<>();
+                for(ServicoOS s : servico) {
+                    codigosServicos.add(s.getServico().getCodServico());
+                }
+                resultadoFinal.put("servicos", codigosServicos);
+                mapper.writeValue(response.getWriter(), resultadoFinal);
+                return;
             }
 
             //Busca Pessoa por CPF: /api/endereco?cpf=...&pessoa=...
@@ -127,9 +305,22 @@ public class Servlet extends HttpServlet {
             if (cpf != null && !cpf.isEmpty() && usuario!=null && !usuario.isEmpty()) {
                 Pessoa pessoa = manager.obterPessoaPorCPF(cpf, usuario);
 
-                response.setStatus(HttpServletResponse.SC_OK); // 200 OK
+                response.setStatus(HttpServletResponse.SC_OK);
                 mapper.writeValue(response.getWriter(), pessoa);
                 return;
+            }
+
+            //Busca ViaCEP: /api/endereco/viacep?cep=...
+            if (pathInfo != null && pathInfo.contains("/viacep")) {
+                String cepViaCep = request.getParameter("cep");
+
+                if (cepViaCep != null && !cepViaCep.isEmpty()) {
+                    Endereco enderecoViaCep = manager.obterEnderecoPorCepViaCEP(cepViaCep);
+
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    mapper.writeValue(response.getWriter(), enderecoViaCep);
+                    return;
+                }
             }
 
             //Busca local Cep: /api/endereco?cep=...
@@ -137,7 +328,7 @@ public class Servlet extends HttpServlet {
             if (cep != null && !cep.isEmpty()) {
                 List<Endereco> listaEnderecos = manager.obterEnderecoPorCep(cep);
 
-                response.setStatus(HttpServletResponse.SC_OK); // 200 OK
+                response.setStatus(HttpServletResponse.SC_OK);
                 mapper.writeValue(response.getWriter(), listaEnderecos);
                 return;
             }

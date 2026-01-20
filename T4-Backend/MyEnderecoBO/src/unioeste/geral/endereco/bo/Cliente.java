@@ -1,5 +1,6 @@
 package unioeste.geral.endereco.bo;
 import java.io.Serializable;
+import java.util.List;
 
 public class Cliente implements Pessoa, Serializable{
     private int codCliente;
@@ -49,5 +50,6 @@ public class Cliente implements Pessoa, Serializable{
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
 
 }

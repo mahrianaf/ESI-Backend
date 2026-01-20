@@ -20,19 +20,25 @@ function showMessage(msg, type = 'success') {
 }
 
 function clearForm() {
-    // Limpa campos de texto e números
+    //Limpa campos de texto e números
     const ids = ['inputNome', 'inputCPF', 'inputCEP', 'inputComplemento', 'inputNumero', 'inputIdCidade'];
     ids.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
     });
-    // Reseta os selects para a primeira opção (valor 0)
+    //Reseta os selects para a primeira opção (valor 0)
     const selects = ['selectBairro', 'selectLogradouro'];
     selects.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.selectedIndex = 0;
     });
-    // Limpa a mensagem de validação da cidade
+    //Limpa os botões de busca
+    const buscas = ['inputCepBusca', 'inputIdBusca', 'inputCepViaCep', 'inputCpfBusca'];
+    buscas.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+    //Limpa a mensagem de validação da cidade
     const cidadeInfo = document.getElementById('cidadeInfo');
     if (cidadeInfo) {
         cidadeInfo.textContent = '';
@@ -47,6 +53,7 @@ function esconderResultadoBusca() {
     }
 }
 
+//Mostra o resultado da buca por endereço
 function formatarEnderecoParaHTML(endereco, index = 1) {
     
     const cidadeNome = endereco.cidade ? `${endereco.cidade.nomeCidade}/${endereco.cidade.uf.siglaUF || endereco.cidade.uf}` : 'N/A';
@@ -76,15 +83,14 @@ function exibirResultadoBusca(data) {
         data.forEach((endereco, index) => {
             htmlContent += formatarEnderecoParaHTML(endereco, index + 1);
         });
-        
     } else if (data && data.cep) {
         htmlContent += formatarEnderecoParaHTML(data, 1);
     } 
-
     resultadoDiv.innerHTML = htmlContent;
     resultadoDiv.style.display = 'block';
 }
 
+//Consulta de endereço cadastrado por viacep
 /** @param {string} cep */
 
 async function consultarViaCEP(cep) {
@@ -117,6 +123,7 @@ async function consultarViaCEP(cep) {
                 resultadoDiv.style.display = 'block';
                 
                 showMessage('✅ ViaCEP realizado!', 'success');
+                clearForm();
             }
         } else {
             showMessage(data.message || `Erro ViaCEP. Status: ${response.status}`, 'error');
@@ -127,9 +134,9 @@ async function consultarViaCEP(cep) {
     }
 }
 
+//Consultar Pessoa cadastrada pelo CPF
 async function consultarPessoa() {
-    clearForm();
-
+   
     //Parâmetros Entidade
     const urlParams = new URLSearchParams(window.location.search);
     const tipoUsuario = urlParams.get('tipo'); 
@@ -144,7 +151,6 @@ async function consultarPessoa() {
 
     try {
         const response = await fetch(`http://localhost:8080/api/endereco?cpf=${cpfInput}&pessoa=${tipoUsuario}`);
-
         if (response.ok) {
             const data = await response.json();
 
@@ -159,10 +165,10 @@ async function consultarPessoa() {
                 <strong>Cidade</strong> ..................... ${data.endereco.cidade.nomeCidade} - ${data.endereco.cidade.uf.siglaUF} 
             </div>
             `;
-
             messageDiv.innerHTML = resumoHTML;
             messageDiv.className = "message success"; 
             messageDiv.style.display = "block"; 
+            clearForm();
 
         } else {
             showMessage('❌ CPF não encontrado.', 'error');
@@ -173,10 +179,11 @@ async function consultarPessoa() {
         showMessage('Erro ao buscar dados.', 'error');
     }
 }
+
+//Consulta endereço cadastrado
 /** @param {'cep'|'id'|'viacep'} tipo */
  
 async function consultarEndereco(tipo) {
-    clearForm();
     esconderResultadoBusca(); 
     
     let url = API_BASE_URL;
@@ -200,7 +207,6 @@ async function consultarEndereco(tipo) {
         url += `/id/${valor}`; 
     } 
     else return;
-    
 
     try {
         const response = await fetch(url);
@@ -216,6 +222,7 @@ async function consultarEndereco(tipo) {
             
             const msgSucesso = Array.isArray(data) ? `✅ CEP: ${data.length} endereço(s).` : `✅ ID: ${data.idEndereco}.`;
             showMessage(msgSucesso, 'success');
+            clearForm();
             
         } else {
             showMessage(data.message || 'Erro ao consultar endereço local!', 'error');
@@ -226,7 +233,7 @@ async function consultarEndereco(tipo) {
     }
 }
 
-
+//Validar ID Cidade no cadastro
 async function validarCidade() {
     const id = document.getElementById('inputIdCidade').value;
     const info = document.getElementById('cidadeInfo');
@@ -237,7 +244,6 @@ async function validarCidade() {
         info.style.color = '#333';
         return;
     }
-
     const url = `${API_BASE_URL}/cidade/${id}`;
 
     try {
@@ -261,6 +267,7 @@ async function validarCidade() {
     }
 }
 
+//Cadastrar Cliente ou Paciente
 async function CadastrarPessoa(){
     //Dados Formulario
     const nome = document.getElementById('inputNome').value.trim();
@@ -274,9 +281,12 @@ async function CadastrarPessoa(){
 
     //Vetores de Email e Telefone
     const emailsNodes = document.getElementsByClassName('inputEmail');
-    const emailsArray = Array.from(emailsNodes).map(input => input.value.trim()).filter(val => val !== "");
+    const emailsArray = Array.from(emailsNodes).map(input => 
+                        input.value.trim()).filter(val => val !== "");
+
     const telefonesNodes = document.getElementsByClassName('inputTelefone');
-    const telefonesArray = Array.from(telefonesNodes).map(input => input.value.trim()).filter(val => val !== "");
+    const telefonesArray = Array.from(telefonesNodes).map(input => 
+                           input.value.trim()).filter(val => val !== "");
 
     //Parâmetros Entidade
     const urlParams = new URLSearchParams(window.location.search);
@@ -304,6 +314,7 @@ async function CadastrarPessoa(){
 
     //Informação Cadastro
     const cadastro = {
+        acao: "cadastrarPessoa",
         tipo: tipoUsuario,
         nome:nome,
         cpf:cpf,
@@ -316,7 +327,6 @@ async function CadastrarPessoa(){
         emails: emailsArray,
         telefones: telefonesArray
     };
-
     console.log(cadastro)
 
     try { //Encaminhamento Backend
@@ -339,19 +349,19 @@ async function CadastrarPessoa(){
         showMessage('Erro de conexão. Verifique se o Tomcat está ativo.', 'error');
         console.error('Erro na submissão:', error);
     }
-
 }
 
+//Adiciona contato secundário
 function adicionarLinha() {
     const tbody = document.querySelector("#tabelaContatos");
     const row = document.createElement("table");
 
     row.innerHTML = `
-    <table id="tabelaContatos" style="flex: 1;">
-    <tbody class="row" >
-        <td><input class="inputTelefone" type="text" style="background-color: #e7eaee; width: 18rem;"></td>
-        <td><input class="inputEmail"    type="text" style="background-color: #e7eaee; width: 18rem;"></td>
-        <td>
+    <table id="tabelaContatos" class="row">
+    <tbody class="row" style="flex: 1;">
+        <td style="flex: 1;"><input class="inputTelefone" type="text" style="background-color: #e7eaee;"></td>
+        <td style="flex: 1;"><input class="inputEmail"    type="text" style="background-color: #e7eaee;"></td>
+        <td style="flex: 0.3;">
             <i class="ri-close-circle-fill" onclick="removerLinha(this)"></i>
         </td>
     </tbody>
@@ -360,15 +370,13 @@ function adicionarLinha() {
     tbody.appendChild(row);
 }
 
-
+//Remove contato secundário
 function removerLinha(btn) {
     const row = btn.parentNode.parentNode;
     row.parentNode.removeChild(row);
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
-    popularSelects(); 
     // Listener para limpar apenas números em campos de CEP/ID (para inputCidade)
     const inputCidade = document.getElementById('inputIdCidade');
     const cepFields = [document.getElementById('inputCep'), document.getElementById('inputCepBusca'), document.getElementById('inputCepViaCep')];

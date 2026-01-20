@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class ConexaoBD {
     private static final String url = "jdbc:mysql://localhost:3306/servicos";
     private static final String user = "root";
-    private static final String senha = "senha";
+    private static final String senha = "sua-senha-aqui";
     private static Connection conn;
 
     public static Connection getConnection(){
