@@ -20,12 +20,16 @@
             <h2>Formulário Ordem de Serviço</h2>
             <div class="row">
                 <div class="campoUnico">
-                    <label class="inicio" for="nro">Número OS</label>
+                    <label class="inicio" for="numeroOS">Número OS</label>
                     <input id="numeroOS" placeholder="Ex: 001">
                 </div>
                 <div class="campoUnico">
-                    <label class="inicio"  for="data">Data Emissão</label>
+                    <label class="inicio"  for="dataEmissaoOS">Data Emissão</label>
                     <input type="date" id="dataEmissaoOS">
+                </div>
+                <div class="campoBusca OS">
+                    <input id="buscaOS" placeholder="Buscar Ordem">
+                    <button onclick="consultarOS()"><i class="ri-search-line"></i></button>
                 </div>
             </div>
             <div class="espaco"></div>
@@ -172,17 +176,17 @@
             <h2>Formulário Receita Médica</h2>
             <div class="row">
                 <div class="campoUnico">
-                    <label class="inicio" for="nro">Número Receita</label>
+                    <label class="inicio" for="nroRM">Número Receita</label>
                     <input id="nroRM" placeholder="Ex: 001">
                 </div>
                 <div class="campoUnico">
-                    <label class="inicio"  for="data">Data Emissão</label>
+                    <label class="inicio"  for="dataRM">Data Emissão</label>
                     <input type="date" id="dataRM">
                 </div>
-                <!--<div class="campoBusca">
-                    <input placeholder="Busque aqui">
-                    <button><i class="ri-search-line"></i></button>
-                </div>-->
+                <div class="campoBusca">
+                    <input id="buscaRM" placeholder="Buscar Receita">
+                    <button onclick="consultarRM()"><i class="ri-search-line"></i></button>
+                </div>
             </div>
             <div class="espaco"></div>
 
@@ -191,57 +195,57 @@
                 <span class="nome_destaque">Dados do Médico</span>
                 <div class="row receita"> <!--Dados Medico-->
                     <div class="campoUnico" style="flex: 0.5;"> 
-                        <label>CRM:</label>
+                        <label for="crm">CRM:</label>
                         <input id="crm" placeholder="Ex: 001">
                     </div>
                     <div class="campoUnico" style="flex: 2;">
-                        <label>Nome:</label>
+                        <label for="nomeM">Nome:</label>
                         <input id="nomeM" disabled">
                     </div>
                     <div class="campoUnico" style="flex: 1;">
-                        <label>CPF:</label>
+                        <label for="cpfM">CPF:</label>
                         <input id="cpfM" disabled>
                     </div>
                 </div>
                 <div class="row receita"> <!--Dados Moradia-->
                     <div class="campoUnico" style="flex: 1;">
-                        <label>Bairro:</label>
+                        <label for="bairroM">Bairro:</label>
                         <input id="bairroM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
-                        <label>Rua:</label>
+                        <label for="ruaM">Rua:</label>
                         <input id="ruaM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 0.8;">
-                        <label>Complemento:</label>
+                        <label for="compM">Complemento:</label>
                         <input id="compM" disabled>
                     </div>
                 </div>
                 <div class="row receita"> <!--Dados Cidade-->
                     <div class="campoUnico" style="flex: 0.3;">
-                        <label>Nro:</label>
+                        <label for="nroM">Nro:</label>
                         <input id="nroM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
-                        <label>CEP:</label>
+                        <label for="cepM">CEP:</label>
                         <input id="cepM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1;">
-                        <label>Cidade:</label>
+                        <label for="cidM">Cidade:</label>
                         <input id="cidM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 0.3;">
-                        <label>UF:</label>
+                        <label for="ufM">UF:</label>
                         <input id="ufM" disabled>
                     </div>
                 </div>
                 <div class="row receita"> <!--Dados Contato-->
                     <div class="campoUnico" style="flex: 1;"> 
-                        <label>Email:</label>
+                        <label for="emailsM">Email:</label>
                         <input id="emailsM" disabled>
                     </div>
                     <div class="campoUnico" style="flex: 1">
-                        <label>Telefone:</label>
+                        <label for="fonesM">Telefone:</label>
                         <input id="fonesM" disabled>
                     </div>
                 </div>
@@ -363,16 +367,6 @@
     <div class="container">
         <h2>ÁREA DE CONSULTA</h2>
         <div class="espaco"></div>
-        <div class="col">
-        <div class="campoBusca OS" style="width: 14rem; margin-left: 20rem; ">
-            <input id="buscaOS" placeholder="Buscar Ordem">
-            <button onclick="consultarOS()"><i class="ri-search-line"></i></button>
-        </div>
-        <div class="campoBusca" style="width: 14rem; margin-left: 1rem;">
-            <input id="buscaRM" placeholder="Buscar Receita">
-            <button onclick="consultarRM()"><i class="ri-search-line"></i></button>
-        </div>
-        </div>
         <div id="resultadoBusca" style="display: none; margin-top: 1rem;"></div>
     </div>
 

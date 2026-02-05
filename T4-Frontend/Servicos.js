@@ -14,7 +14,6 @@ function openTab(tabId, btnElement) {
     document.getElementById(tabId).classList.add("ativo");
     btnElement.classList.add("ativo");
 }
-
 //Adiciona mais códigos de serviços
 function adicionarLinha() {
     const tbody = document.querySelector("#tabelaServico");
@@ -30,6 +29,74 @@ function adicionarLinha() {
     `;
     tbody.appendChild(row);
 }
+//Adição de Linhas da Tabela de Medicamentos
+function addMedicamento() {
+    const tbody = document.querySelector("#tabelaReceita");
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+        <td><input class="med-class" type="text" placeholder="" style="background-color: #fcfcfc;"></td>
+        <td><input class="inicio-class" type="date" style="background-color: #fcfcfc;"></td>
+        <td><input class="fim-class" type="date" style="background-color: #fcfcfc;"></td>
+        <td><input class="poso-class" type="text" placeholder="" style="background-color: #fcfcfc;"></td>
+        <td>
+            <i class="ri-close-circle-fill" onclick="removerLinha(this)"></i>
+        </td>
+    `;
+    tbody.appendChild(row);
+}
+//Remoção da Linha Adicionada
+function removerLinha(btn) {
+    const row = btn.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+    totalOS();
+}
+//Calcular Ordem de Servico
+function totalOS(){
+    let soma = 0;
+
+    //Seleciona o fixo (por ID) e os dinâmicos (por classe)
+    const todosOsValores = document.querySelectorAll('#valor, .valor-input');
+
+    todosOsValores.forEach(input => {
+        //Converte o valor para número. Se estiver vazio ou der erro, escreve 0.
+        const valorNumerico = parseFloat(input.value.replace("R$", "").replace(",", ".")) || 0;
+        soma += valorNumerico;
+    });
+    //Atualiza o input de total formatando para moeda brasileira
+    document.getElementById('total').value = soma.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
+}
+//Limpar campos da Ordem de Servico
+async function Limpar(){
+    
+    const os = ['numeroOS', 'dataEmissaoOS', 'codC', 'nomeC', 'cpfC', 'bairroC','ruaC','compC','nroC','cepC','cidC','ufC','emailsC','fonesC',
+        'codA','nomeA','emailsA','fonesA','DP','servico','nomeTipo','valor','total','buscaRM','buscaOS', 'servico-input', 'nomeTipo-input', 
+        'valor-input'];
+    os.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+    /*
+    const selects = ['selectBairro', 'selectLogradouro'];
+    selects.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.selectedIndex = 0;
+    });*/
+
+    const rm = ['nroRM', 'dataRM', 'crm', 'nomeM','cpfM','bairroM','ruaM','compM','nroM','cepM','cidM','ufM','emailsM','fonesM',
+        'cpfP','nomeP','bairroP','ruaP','compP','nroP','cepP','cidP','ufP','emailsP','fonesP','CID','nomeCID','med','inicio','fim','poso',
+        'med-class', 'inicio-class', 'fim-class', 'poso-class'
+    ];
+    rm.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+}
+
+//ADD EVENT LISTENERS
 
 //Listener para buscar códigos dos serviços adicionados
 document.querySelector("#tabelaServico").addEventListener("input", async function (e) {
@@ -63,32 +130,7 @@ document.querySelector("#tabelaServico").addEventListener("input", async functio
         }
     }
 });
-
-//Adição de Linhas da Tabela de Medicamentos
-function addMedicamento() {
-    const tbody = document.querySelector("#tabelaReceita");
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-        <td><input class="med-class" type="text" placeholder="" style="background-color: #fcfcfc;"></td>
-        <td><input class="inicio-class" type="date" style="background-color: #fcfcfc;"></td>
-        <td><input class="fim-class" type="date" style="background-color: #fcfcfc;"></td>
-        <td><input class="poso-class" type="text" placeholder="" style="background-color: #fcfcfc;"></td>
-        <td>
-            <i class="ri-close-circle-fill" onclick="removerLinha(this)"></i>
-        </td>
-    `;
-    tbody.appendChild(row);
-}
-
-//Remoção da Linha Adicionada
-function removerLinha(btn) {
-    const row = btn.parentNode.parentNode;
-    row.parentNode.removeChild(row);
-    totalOS();
-}
-
-//Buscar Cliennte, Paciente, Medico e Atendente
+//Buscar Cliente, Paciente, Medico e Atendente
 document.getElementById("codC").addEventListener("input", async function (){
     const cod = document.getElementById('codC').value.trim();
     const pessoa = "cliente";
@@ -123,7 +165,7 @@ document.getElementById("codC").addEventListener("input", async function (){
         console.error(error);
     }
 });
-
+//Busca atendente
 document.getElementById("codA").addEventListener("input", async function (){
     const cod = document.getElementById('codA').value.trim();
     const pessoa = "atendente";
@@ -148,7 +190,7 @@ document.getElementById("codA").addEventListener("input", async function (){
         console.error(error);
     }
 });
-
+//Busca paciente
 document.getElementById("cpfP").addEventListener("input", async function (){
     const cod = document.getElementById('cpfP').value.trim();
     const pessoa = "paciente";
@@ -181,7 +223,7 @@ document.getElementById("cpfP").addEventListener("input", async function (){
         console.error(error);
     }
 });
-
+//Busca do crm
 document.getElementById("crm").addEventListener("input", async function (){
     const cod = document.getElementById('crm').value.trim();
     const pessoa = "medico";
@@ -215,7 +257,6 @@ document.getElementById("crm").addEventListener("input", async function (){
         console.error(error);
     }
 });
-
 //Buscar Servico da instância fixa
 document.getElementById("tabelaServico").addEventListener("input", async function (){
     const codServico = document.getElementById('servico').value.trim();
@@ -237,25 +278,26 @@ document.getElementById("tabelaServico").addEventListener("input", async functio
         console.error(error);
     }
 });
+//Buscar codigo CID
+document.getElementById("CID").addEventListener("input", async function (){
+    const cod = document.getElementById('CID').value.trim();
 
-//Calcular Ordem de Servico
-function totalOS(){
-    let soma = 0;
+    try {
+        const response = await fetch(`http://localhost:8080/api/endereco?CID=${cod}`);
 
-    //Seleciona o fixo (por ID) e os dinâmicos (por classe)
-    const todosOsValores = document.querySelectorAll('#valor, .valor-input');
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById('nomeCID').value = data.nome;
 
-    todosOsValores.forEach(input => {
-        //Converte o valor para número. Se estiver vazio ou der erro, escreve 0.
-        const valorNumerico = parseFloat(input.value.replace("R$", "").replace(",", ".")) || 0;
-        soma += valorNumerico;
-    });
-    //Atualiza o input de total formatando para moeda brasileira
-    document.getElementById('total').value = soma.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    });
-}
+        } else {
+            console.log("Código CID inválido!");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+//FUNÇÕES PRINCIPAIS
 
 //Ordem de Servico
 async function cadastrarOS(){
@@ -327,7 +369,7 @@ async function cadastrarOS(){
     }
     Limpar();
 }
-
+//Consulta
 async function consultarOS(){
     const valor = document.getElementById('buscaOS').value.trim();
     const messageDiv = document.getElementById('resultadoBusca');
@@ -345,7 +387,7 @@ async function consultarOS(){
 
         const resumoHTML = ` 
             <div class="destaque">
-                <span class="nome_destaque">📝 Ordem de Serviço Nº:${data.nroOS}</span>
+                <span class="nome_destaque searches">📝 Ordem de Serviço Nº:${data.nroOS}</span>
                 <p><strong>Data ........................</strong> ${data.data}</p>
                 <p><strong>ID Cliente ................</strong> ${data.clienteId}</p>
                 <p><strong>Total .........................</strong> R$ ${data.total}</p>
@@ -354,6 +396,7 @@ async function consultarOS(){
         `;
         messageDiv.innerHTML = resumoHTML;
         messageDiv.style.display = "block"; 
+        document.getElementById("resultadoBusca")?.scrollIntoView({ behavior: "smooth" });
         Limpar();
 
     } catch (error) {
@@ -361,51 +404,7 @@ async function consultarOS(){
         alert("O servidor enviou um dado inválido. Verifique o console do Java.");
     }
 }
-
-//Limpar campos da Ordem de Servico
-async function Limpar(){
-    
-    const os = ['numeroOS', 'dataEmissaoOS', 'codC', 'nomeC', 'cpfC', 'bairroC','ruaC','compC','nroC','cepC','cidC','ufC','emailsC','fonesC',
-        'codA','nomeA','emailsA','fonesA','DP','servico','nomeTipo','valor','total','buscaRM','buscaOS'];
-    os.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.value = '';
-    });
-    /*
-    const selects = ['selectBairro', 'selectLogradouro'];
-    selects.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.selectedIndex = 0;
-    });*/
-
-    const rm = ['nroRM', 'dataRM', 'crm', 'nomeM','cpfM','bairroM','ruaM','compM','nroM','cepM','cidM','ufM','emailsM','fonesM',
-        'cpfP','nomeP','bairroP','ruaP','compP','nroP','cepP','cidP','ufP','emailsP','fonesP','CID','nomeCID','med','inicio','fim','poso'
-    ];
-    rm.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.value = '';
-    });
-}
-
-//Buscar codigo CID
-document.getElementById("CID").addEventListener("input", async function (){
-    const cod = document.getElementById('CID').value.trim();
-
-    try {
-        const response = await fetch(`http://localhost:8080/api/endereco?CID=${cod}`);
-
-        if (response.ok) {
-            const data = await response.json();
-            document.getElementById('nomeCID').value = data.nome;
-
-        } else {
-            console.log("Código CID inválido!");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-});
-
+//Cadastro
 async function cadastrarRM() {
     //Captura campos fixos
     const nrRM = parseInt(document.getElementById('nroRM').value);
@@ -487,7 +486,6 @@ async function cadastrarRM() {
     }
     Limpar();
 }
-
 //Consultar Receita Medica
 async function consultarRM() {
     const valor = document.getElementById('buscaRM').value.trim();
@@ -519,7 +517,7 @@ async function consultarRM() {
             //Montando o HTML com as chaves exatas do JSON
             const resumoHTML = ` 
                 <div class="destaque">
-                    <span class="nome_destaque">🏥 Receita Médica Nº:${data.receita.nroReceita}</span>
+                    <span class="nome_destaque searches">🏥 Receita Médica Nº:${data.receita.nroReceita}</span>
                     <p><strong>Data ......................</strong> ${data.receita.dataEmissao}</p>
                     <p><strong>Paciente ................</strong> ${data.receita.paciente}</p>
                     <p><strong>Médico ..................</strong> ${data.receita.medico}</p>
@@ -527,7 +525,7 @@ async function consultarRM() {
                 </div>
             `;
                     /*<div style="background: #f9f9f9; padding: 10px; border-radius: 5px; margin-top: 10px;">
-                        <strong>💊 Prescrições:</strong>
+                        <strong> Prescrições:</strong>
                         <ul style="list-style: none; padding: 0; margin-top: 10px;">
                             ${listaHTML}
                         </ul>
@@ -535,6 +533,7 @@ async function consultarRM() {
             
             messageDiv.innerHTML = resumoHTML;
             messageDiv.style.display = "block"; 
+            document.getElementById("resultadoBusca")?.scrollIntoView({ behavior: "smooth" });
             Limpar();
 
         } else {
