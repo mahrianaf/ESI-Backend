@@ -1,3 +1,46 @@
+// =========================================================
+// 1. MICROSERVIÇO DE IA - INTERPRETADOR (Item d)
+// =========================================================
+
+// FORÇAR A FUNÇÃO NO ESCOPO GLOBAL
+window.enviarParaIA = async function() {
+    const input = document.getElementById("userInput");
+    const chat = document.getElementById("chat-window");
+
+    if (!input || !chat) {
+        alert("Erro técnico: IDs do chat não encontrados no HTML.");
+        return;
+    }
+
+    const texto = input.value.trim();
+    if (!texto) return;
+
+    chat.innerHTML += `<p><strong>Você:</strong> ${texto}</p>`;
+    const prompt = texto.toLowerCase();
+
+    // Lógica de Roteamento (Item d - Sem consulta ao SGBD)
+    if (prompt.includes("os") || prompt.includes("ordem") || prompt.includes("serviço")) {
+        chat.innerHTML += `<p style="color: blue;"><strong>IA:</strong> Identifiquei pedido de OS. Consultando...</p>`;
+        const num = prompt.match(/\d+/);
+        if(num) document.getElementById("buscaOS").value = num[0];
+
+        // CHAMA O SEU BACKEND
+        if (typeof consultarOS === "function") await consultarOS();
+    } else if (prompt.includes("receita") || prompt.includes("médico") || prompt.includes("paciente") || prompt.includes("remédio")) {
+        chat.innerHTML += `<p style="color: blue;"><strong>IA:</strong> Buscando dados da Receita...</p>`;
+        const num = prompt.match(/\d+/);
+        if(num) document.getElementById("buscaRM").value = num[0];
+
+        // CHAMA O SEU BACKEND
+        if (typeof consultarRM === "function") await consultarRM();
+    } else {
+        chat.innerHTML += `<p><strong>IA:</strong> Não entendi. Tente perguntar por 'OS 1' ou 'Receita'.</p>`;
+    }
+
+    input.value = "";
+    chat.scrollTop = chat.scrollHeight;
+};
+
 //Abrir Tabs Disponíveis
 function openTab(tabId, btnElement) {
 
@@ -389,7 +432,7 @@ async function consultarOS(){
             <div class="destaque">
                 <span class="nome_destaque searches">📝 Ordem de Serviço Nº:${data.nroOS}</span>
                 <p><strong>Data ........................</strong> ${data.data}</p>
-                <p><strong>ID Cliente ................</strong> ${data.clienteId}</p>
+                <p><strong>Cliente .....................</strong> ${data.clienteNome}</p>
                 <p><strong>Total .........................</strong> R$ ${data.total}</p>
                 <strong>Serviços ...................</strong> ${data.servicos.join(', ')}
             </div>
@@ -502,13 +545,14 @@ async function consultarRM() {
             
             //Tratando a lista de itens (medicamentos)
             let listaHTML = "";
+            console.log(data.itens);
             if (data.itens && data.itens.length > 0) {
                 listaHTML = data.itens.map(item => `
-                    <li style="border-bottom: 1px solid #ddd; padding: 5px;">
-                        <strong>💊 Medicamento:</strong> ${item.medicamento} <br>
-                        <strong>Posologia:</strong> ${item.posologia} <br>
-                        <small>Duração: ${item.inicio} até ${item.fim}</small>
-                    </li>
+                    <div>
+                        <p><strong>Medicamento:</strong> ${item.medicamento} </p>
+                        <p><strong>Posologia:</strong> ${item.posologia} </p>
+                        <p><strong>Duração:</strong> ${item.inicio} até ${item.fim}</p>
+                    </div>
                 `).join('');
             } else {
                 listaHTML = "<li>Nenhum medicamento encontrado para esta receita.</li>";
@@ -516,20 +560,20 @@ async function consultarRM() {
 
             //Montando o HTML com as chaves exatas do JSON
             const resumoHTML = ` 
-                <div class="destaque">
+                <div class="destaque" style="margin-bottom: 2rem;">
                     <span class="nome_destaque searches">🏥 Receita Médica Nº:${data.receita.nroReceita}</span>
                     <p><strong>Data ......................</strong> ${data.receita.dataEmissao}</p>
                     <p><strong>Paciente ................</strong> ${data.receita.paciente}</p>
                     <p><strong>Médico ..................</strong> ${data.receita.medico}</p>
                     <p><strong>CID .........................</strong> ${data.receita.cidNome}</p>
                 </div>
+                <div class="destaque">
+                    <span class="nome_destaque searches">💊 Prescrições</span>
+                    <ul style="list-style: none; padding: 0; margin-top: 10px;">
+                        ${listaHTML}
+                    </ul>
+                </div>
             `;
-                    /*<div style="background: #f9f9f9; padding: 10px; border-radius: 5px; margin-top: 10px;">
-                        <strong> Prescrições:</strong>
-                        <ul style="list-style: none; padding: 0; margin-top: 10px;">
-                            ${listaHTML}
-                        </ul>
-                    </div>*/
             
             messageDiv.innerHTML = resumoHTML;
             messageDiv.style.display = "block"; 

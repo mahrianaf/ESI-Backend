@@ -158,7 +158,6 @@ async function consultarPessoa() {
             <div class="destaque">
                 <span class="nome_busca">📑 Cadastro Completo</span>
                 <strong>Nome</strong> ....................... ${data.nome}<br>
-                <strong>Email</strong> ....................... ${data.emails}<br>
                 <strong>CPF</strong> ............................ ${data.cpf}<br>
                 <strong>Endereço</strong> ................ ${data.endereco.logradouro.nomeLogradouro}, ${data.nroMoradia}<br>
                 <strong>Bairro</strong> ....................... ${data.endereco.bairro.nomeBairro}<br> 
