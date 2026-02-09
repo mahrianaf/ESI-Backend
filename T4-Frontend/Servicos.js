@@ -3,14 +3,20 @@
 // =========================================================
 
 // FORÇAR A FUNÇÃO NO ESCOPO GLOBAL
+// IA
+function escreverNoChat(mensagem, cor = "#2c3e50") {
+    const chat = document.getElementById("chat-window");
+    if (chat) {
+        chat.innerHTML += `<p style="color: ${cor};"><strong>IA:</strong> ${mensagem}</p>`;
+        chat.scrollTop = chat.scrollHeight;
+    }
+}
+
 window.enviarParaIA = async function() {
     const input = document.getElementById("userInput");
     const chat = document.getElementById("chat-window");
 
-    if (!input || !chat) {
-        alert("Erro técnico: IDs do chat não encontrados no HTML.");
-        return;
-    }
+    if (!input || !chat) return;
 
     const texto = input.value.trim();
     if (!texto) return;
@@ -18,27 +24,44 @@ window.enviarParaIA = async function() {
     chat.innerHTML += `<p><strong>Você:</strong> ${texto}</p>`;
     const prompt = texto.toLowerCase();
 
-    // Lógica de Roteamento (Item d - Sem consulta ao SGBD)
+    // Roteamento Inteligente (Item d)
     if (prompt.includes("os") || prompt.includes("ordem") || prompt.includes("serviço")) {
-        chat.innerHTML += `<p style="color: blue;"><strong>IA:</strong> Identifiquei pedido de OS. Consultando...</p>`;
+        escreverNoChat("Identifiquei pedido de Ordem de Serviço. Consultando dados...", "blue");
         const num = prompt.match(/\d+/);
-        if(num) document.getElementById("buscaOS").value = num[0];
-
-        // CHAMA O SEU BACKEND
-        if (typeof consultarOS === "function") await consultarOS();
-    } else if (prompt.includes("receita") || prompt.includes("médico") || prompt.includes("paciente") || prompt.includes("remédio")) {
-        chat.innerHTML += `<p style="color: blue;"><strong>IA:</strong> Buscando dados da Receita...</p>`;
+        if(num) {
+            document.getElementById("buscaOS").value = num[0];
+            await consultarOS(); 
+        }
+    } 
+    else if (prompt.includes("receita") || prompt.includes("médico") || prompt.includes("remédio")) {
+        escreverNoChat("Buscando informações da Receita Médica...", "blue");
         const num = prompt.match(/\d+/);
-        if(num) document.getElementById("buscaRM").value = num[0];
-
-        // CHAMA O SEU BACKEND
-        if (typeof consultarRM === "function") await consultarRM();
+        if(num) {
+            document.getElementById("buscaRM").value = num[0];
+            await consultarRM();
+        }
+    }
+    else if (prompt.includes("cliente") || prompt.includes("paciente") || prompt.includes("médico") || prompt.includes("atendente")) {
+        escreverNoChat("Localizando cadastro de pessoa...", "blue");
+        const num = prompt.match(/\d+/);
+        if(num) {
+            // Tenta carregar no campo de código de cliente por padrão
+            const campo = document.getElementById("codC") || document.getElementById("cpfP") || document.getElementById("crm");
+            if(campo) {
+                campo.value = num[0];
+                campo.dispatchEvent(new Event('input')); // Dispara a busca JDBC automática
+                setTimeout(() => {
+                    const nome = document.getElementById("nomeC")?.value || document.getElementById("nomeP")?.value || document.getElementById("nomeM")?.value;
+                    if(nome && nome !== "Não encontrado") escreverNoChat(`Encontrei o cadastro de: ${nome}. Dados carregados nos campos.`);
+                    else escreverNoChat("Não localizei nenhuma pessoa com esse código.");
+                }, 800);
+            }
+        }
     } else {
-        chat.innerHTML += `<p><strong>IA:</strong> Não entendi. Tente perguntar por 'OS 1' ou 'Receita'.</p>`;
+        escreverNoChat("Não entendi. Tente perguntar por 'OS 3', 'Receita 2' ou 'Cliente 1'.");
     }
 
     input.value = "";
-    chat.scrollTop = chat.scrollHeight;
 };
 
 //Abrir Tabs Disponíveis
